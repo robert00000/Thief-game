@@ -55,7 +55,7 @@ class Title extends Phaser.Scene {
       
       
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press the R key to start the game\nPress E to see credits.', textConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height-200 + borderUISize + borderPadding, 'Avoid the Red Spells and obstacles! You can destroy the Blue Spells\nby throwing a projectile by pressing the F key.', textConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height-200 + borderUISize + borderPadding, 'Move using the left and right arrow keys. press the up key to jump.', textConfig).setOrigin(0.5);
         
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
