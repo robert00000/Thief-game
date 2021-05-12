@@ -140,10 +140,9 @@ class Play extends Phaser.Scene{
         }
 
         if(this.physics.collide(player, this.block2)){
-            this.scene.transition({
-                target: 'scene2',
-                dutartion:1000,
-            })
+            this.scene.isSleeping('playScene');
+            this.scene.run('scene2');
+            this.scene.setVisible('scene2'); 
         }
 
         //The speed for the background.
