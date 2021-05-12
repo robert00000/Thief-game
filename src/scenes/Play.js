@@ -14,7 +14,7 @@ class Play extends Phaser.Scene{
     {   
 
         this.cameras.main.setSize(640, 480);
-        
+        this.cameras.main.setBounds(0,0,1920,1080);
         //const cam2 = this.cameras.add(400, 0, 400, 300);
 
         //This is the create function which creates the playScene for the player.
@@ -46,7 +46,7 @@ class Play extends Phaser.Scene{
         player = this.physics.add.sprite(50, 450, 'Player').setOrigin(0.5);
         player.body.onCollide = true;      // must be set for collision event to work
         player.body.onWorldBounds = true;  // ditto for worldbounds
-        player.setBounce(0.2);  
+        //player.setBounce(0.2);  
         player.setDebugBodyColor(0xFFFF00);
         player.setCollideWorldBounds(true);
 
@@ -124,7 +124,7 @@ class Play extends Phaser.Scene{
         
     }
 
-  
+    
     
     
     update(){
@@ -172,10 +172,13 @@ class Play extends Phaser.Scene{
             player.setVelocityX(0);
         }
 
-        if(cursors.up.isDown ){
+        if(cursors.up.isDown && player.body.blocked.down ){
+            
             player.setVelocityY(-300);
         }
-
+        if(player.body.touching.down){
+            this.jump = 0;
+        }
 
         if (movingPlatform.x >= 500)
         {

@@ -10,7 +10,7 @@ class Scene2 extends Phaser.Scene{
         player.x = 50;
         player.y = 450;
 
-        this.movingPlatform = this.physics.add.image(400, 400, 'ground');
+        this.movingPlatform = this.physics.add.image(400, 600, 'ground');
 
         this.movingPlatform.setImmovable(true);
         this.movingPlatform.body.allowGravity = false;
