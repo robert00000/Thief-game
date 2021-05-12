@@ -58,7 +58,7 @@ class Title extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height-200 + borderUISize + borderPadding, 'Move using the left and right arrow keys. press the up key to jump.', textConfig).setOrigin(0.5);
         
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
+        keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
         highScore = 0;
         
     }
@@ -83,7 +83,7 @@ class Title extends Phaser.Scene {
             // start next scene
             this.scene.start('playScene');
         }
-        if(this.keyE.isDown){
+        if(keyE.isDown){
             //this.sound.play('sfx_spell');
             this.scene.start('Credits')
             this.sound.play('select');

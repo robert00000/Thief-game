@@ -12,31 +12,43 @@ class Play extends Phaser.Scene{
 
     create() 
     {   
+
+        this.cameras.main.setSize(640, 480);
+        
+        //const cam2 = this.cameras.add(400, 0, 400, 300);
+
         //This is the create function which creates the playScene for the player.
         this.block = this.physics.add.sprite(300,30,'Block').setOrigin(0.5);
         //this.block.body.onCollide = true;
         this.block.body.onWorldBounds = true;
         this.block.body.onOverlap = true;
         this.block.setCollideWorldBounds(true);
+
+        this.block2 = this.physics.add.sprite(600,10,'Block').setOrigin(0.5);
+        this.block2.body.onWorldBounds = true;
+        this.block2.body.onOverlap = true;
+        this.block2.setCollideWorldBounds(true);
+
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         // some variables
         platforms = this.physics.add.staticGroup();
 
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
-        movingPlatform = this.physics.add.image(400, 400, 'ground');
+        movingPlatform = this.physics.add.image(200, 400, 'ground');
 
         movingPlatform.setImmovable(true);
         movingPlatform.body.allowGravity = false;
         movingPlatform.setVelocityX(50);
 
         
-        this.player = this.physics.add.sprite(50, 450, 'Player').setOrigin(0.5);
-        this.player.body.onCollide = true;      // must be set for collision event to work
-        this.player.body.onWorldBounds = true;  // ditto for worldbounds
-        this.player.setBounce(0.2);  
-        this.player.setDebugBodyColor(0xFFFF00);
-        this.player.setCollideWorldBounds(true);
+        
+        player = this.physics.add.sprite(50, 450, 'Player').setOrigin(0.5);
+        player.body.onCollide = true;      // must be set for collision event to work
+        player.body.onWorldBounds = true;  // ditto for worldbounds
+        player.setBounce(0.2);  
+        player.setDebugBodyColor(0xFFFF00);
+        player.setCollideWorldBounds(true);
 
         //Knight animations
         this.anims.create({
@@ -84,7 +96,7 @@ class Play extends Phaser.Scene{
 
         //creates timer display
         //scoreConfig.color = "#843605";
-        this.timer = this.add.text(game.config.width/2, 72, this.clock.getElapsedSeconds(), scoreConfig).setOrigin(0.5);
+        this.timer = this.add.text(game.config.width/2, 100, this.clock.getElapsedSeconds(), scoreConfig).setOrigin(0.5);
         
 
 
@@ -104,9 +116,10 @@ class Play extends Phaser.Scene{
         });
 
         //Adding collision 
-        this.physics.add.collider(this.player, this.block);
-        this.physics.add.collider(this.player, movingPlatform);
-        
+        this.physics.add.collider(player, this.block);
+        this.physics.add.collider(player, movingPlatform);
+        //Camera following
+        this.cameras.main.startFollow(player);
 
         
     }
@@ -121,7 +134,17 @@ class Play extends Phaser.Scene{
         //updates timer
         this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
         //play animations
-        this.player.anims.play('running', true);
+        player.anims.play('running', true);
+        if(!this.physics.collide(player, this.block)){
+            this.block.setVelocityX(0)
+        }
+
+        if(this.physics.collide(player, this.block2)){
+            this.scene.transition({
+                target: 'scene2',
+                dutartion:1000,
+            })
+        }
 
         //The speed for the background.
         //this.background.tilePositionX += 1;
@@ -129,29 +152,29 @@ class Play extends Phaser.Scene{
         
         
         //  if(cursors.up.isDown) {
-        //     this.player.body.setVelocityY(-500);
+        //     player.body.setVelocityY(-500);
         //     //this.checkMovement();
         // } 
         // if(cursors.down.isDown) {
-        //      this.player.body.setVelocityY(500);
+        //      player.body.setVelocityY(500);
         //      //this.checkMovement();
         // } 
 
         //Moves player left and right
         if (cursors.left.isDown)
         {
-            this.player.setVelocityX(-160);
+            player.setVelocityX(-160);
         }
         else if (cursors.right.isDown)
         {
-            this.player.setVelocityX(160);
+            player.setVelocityX(160);
         }   
         else{
-            this.player.setVelocityX(0);
+            player.setVelocityX(0);
         }
 
         if(cursors.up.isDown ){
-            this.player.setVelocityY(-300);
+            player.setVelocityY(-300);
         }
 
 
@@ -163,6 +186,7 @@ class Play extends Phaser.Scene{
         {
             movingPlatform.setVelocityX(50);
         }
+        
     }
     //Could possibly randomize sprites positions.
 

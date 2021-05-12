@@ -16,7 +16,7 @@ let config = {
             }
         }
     },
-    scene: [ Title, Play, GameOver, Credits]
+    scene: [ Title, Play,GameOver, Credits ,Scene2]   
     
 }
 
@@ -28,13 +28,12 @@ let borderPadding = borderUISize / 3;
 let platforms;
 let movingPlatform;
 // reserve keyboard variables
-let keyF, keyR, keyLEFT, keyRIGHT, xPosition,yPosition, keyUP, keyDOWN, KeyE;
+let keyF, keyR, keyLEFT, keyRIGHT, xPosition,yPosition, keyUP, keyDOWN, keyE;
 let character = null;
 let centerX = game.config.width/2, centerY = game.config.height/2;
-
+let player;
 
 const textSpacer = 64;
-
 
 let highScore;
 let newHighScore = false;
