@@ -35,15 +35,17 @@ class Play extends Phaser.Scene{
 
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
-        movingPlatform = this.physics.add.image(200, 400, 'ground');
+        movingPlatform = this.physics.add.image(300, 300, 'ground');
 
         movingPlatform.setImmovable(true);
         movingPlatform.body.allowGravity = false;
         movingPlatform.setVelocityX(50);
 
         
-        
-        player = this.physics.add.sprite(50, 450, 'Player').setOrigin(0.5);
+        // Code for where the player is defined.
+         
+        player = new Player(this, 50, 450, 'Player').setOrigin(0.5);
+
         player.body.onCollide = true;      // must be set for collision event to work
         player.body.onWorldBounds = true;  // ditto for worldbounds
         //player.setBounce(0.2);  
@@ -100,11 +102,7 @@ class Play extends Phaser.Scene{
         
 
 
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-          }
+        
         
 
 
@@ -130,7 +128,7 @@ class Play extends Phaser.Scene{
     update(){
         
         this.moveText();
-        
+        player.update();
         //updates timer
         this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
         //play animations
@@ -140,45 +138,12 @@ class Play extends Phaser.Scene{
         }
 
         if(this.physics.collide(player, this.block2)){
-            this.scene.isSleeping('playScene');
-            this.scene.run('scene2');
-            this.scene.setVisible('scene2'); 
-        }
-
-        //The speed for the background.
-        //this.background.tilePositionX += 1;
-        
-        
-        
-        //  if(cursors.up.isDown) {
-        //     player.body.setVelocityY(-500);
-        //     //this.checkMovement();
-        // } 
-        // if(cursors.down.isDown) {
-        //      player.body.setVelocityY(500);
-        //      //this.checkMovement();
-        // } 
-
-        //Moves player left and right
-        if (cursors.left.isDown)
-        {
-            player.setVelocityX(-160);
-        }
-        else if (cursors.right.isDown)
-        {
-            player.setVelocityX(160);
-        }   
-        else{
-            player.setVelocityX(0);
-        }
-
-        if(cursors.up.isDown && player.body.blocked.down ){
             
-            player.setVelocityY(-300);
+            this.scene.start('scene2');
+            
         }
-        if(player.body.touching.down){
-            this.jump = 0;
-        }
+
+        
 
         if (movingPlatform.x >= 500)
         {
