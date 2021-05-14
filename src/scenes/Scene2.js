@@ -38,17 +38,27 @@ class Scene2 extends Phaser.Scene{
         });
 
         //This is the create function which creates the playScene for the player.
-        this.block = this.physics.add.sprite(300,600,'Gem').setOrigin(0.0);
+        this.block = this.physics.add.sprite(0,200,'Gem').setOrigin(0.0);
         this.block.body.onWorldBounds = true;
         this.block.body.setImmovable = true;
         this.block.body.onOverlap = true;
         this.block.setCollideWorldBounds(true);
-        
+        this.block.setVisible = false;
+        this.platform = this.physics.add.sprite(0,300, 'Barrier');
+        this.platform.setImmovable(true);
+        this.platform.body.setSize(100,100);
+        this.platform.body.allowGravity = false;
 
+        this.platform2 = this.physics.add.sprite(300,400, 'Barrier');
+        this.platform2.setImmovable(true);
+        this.platform2.body.setSize(100,100);
+        this.platform2.body.allowGravity = false;
 
         //this.physics.add.collider(player, this.block);
         this.physics.add.collider(player, this.movingPlatform);
-        
+        this.physics.add.collider(this.block, this.platform);
+        this.physics.add.collider(player, this.platform2);
+        this.physics.add.collider(player, this.platform);
         //Camera following
         this.cameras.main.startFollow(player);
     }
@@ -60,6 +70,7 @@ class Scene2 extends Phaser.Scene{
         
         if(this.physics.collide(player, this.block)){
             //this.scene.sleep('scene2')
+            
             this.scene.start('playScene');
             
         }
