@@ -16,15 +16,15 @@ class Play extends Phaser.Scene{
         this.cameras.main.setSize(640, 480);
         this.cameras.main.setBounds(0,0,1920,1080);
         //const cam2 = this.cameras.add(400, 0, 400, 300);
-
+        this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         //This is the create function which creates the playScene for the player.
-        this.block = this.physics.add.sprite(300,30,'Block').setOrigin(0.5);
+        this.block = this.physics.add.sprite(300,600,'Chest').setOrigin(0.5);
         //this.block.body.onCollide = true;
         this.block.body.onWorldBounds = true;
         this.block.body.onOverlap = true;
         this.block.setCollideWorldBounds(true);
 
-        this.block2 = this.physics.add.sprite(600,10,'Block').setOrigin(0.5);
+        this.block2 = this.physics.add.sprite(600,200,'Gem').setOrigin(0.5);
         this.block2.body.onWorldBounds = true;
         this.block2.body.setImmovable = true;
         this.block2.body.onOverlap = true;
@@ -34,14 +34,19 @@ class Play extends Phaser.Scene{
         // some variables
         platforms = this.physics.add.staticGroup();
 
-        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-
-        movingPlatform = this.physics.add.image(300, 300, 'ground');
-
+        platforms.create(400, 568, 'Barrier').setScale(2).refreshBody();
+        
+        movingPlatform = this.physics.add.image(300, 300, 'Barrier');
+        movingPlatform.body.setSize(100,100);
+        
         movingPlatform.setImmovable(true);
         movingPlatform.body.allowGravity = false;
         movingPlatform.setVelocityX(50);
 
+        this.platform = this.physics.add.sprite(600, 300, 'Barrier');
+        this.platform.setImmovable(true);
+        this.platform.body.setSize(100,100);
+        this.platform.body.allowGravity = false;
         
         // Code for where the player is defined.
          
@@ -117,6 +122,8 @@ class Play extends Phaser.Scene{
         //Adding collision 
         this.physics.add.collider(player, this.block);
         this.physics.add.collider(player, movingPlatform);
+        this.physics.add.collider(this.platform, player);
+        this.physics.add.collider(this.platform, this.block2);
         //Camera following
         this.cameras.main.startFollow(player);
 

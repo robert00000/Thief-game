@@ -9,9 +9,10 @@ class Scene2 extends Phaser.Scene{
 
     }
     create(){
+        this.cameras.main.setSize(640, 480);
+        this.cameras.main.setBounds(0,0,1920,1080);
 
-
-
+        this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
 
         
         player = new Player(this, 50, 450, 'Player').setOrigin(0.5);
@@ -22,7 +23,7 @@ class Scene2 extends Phaser.Scene{
         player.setDebugBodyColor(0xFFFF00);
         player.setCollideWorldBounds(true);
 
-        this.movingPlatform = this.physics.add.image(200, 600, 'ground');
+        this.movingPlatform = this.physics.add.image(100, 100, 'Camera');
 
         this.movingPlatform.setImmovable(true);
         this.movingPlatform.body.allowGravity = false;
@@ -37,15 +38,19 @@ class Scene2 extends Phaser.Scene{
         });
 
         //This is the create function which creates the playScene for the player.
-        this.block = this.physics.add.sprite(300,50,'ground').setOrigin(0.5);
+        this.block = this.physics.add.sprite(300,600,'Gem').setOrigin(0.0);
         this.block.body.onWorldBounds = true;
         this.block.body.setImmovable = true;
         this.block.body.onOverlap = true;
         this.block.setCollideWorldBounds(true);
+        
+
 
         //this.physics.add.collider(player, this.block);
         this.physics.add.collider(player, this.movingPlatform);
         
+        //Camera following
+        this.cameras.main.startFollow(player);
     }
     update(){
 
