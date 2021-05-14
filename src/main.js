@@ -32,7 +32,7 @@ let keyF, keyR, keyLEFT, keyRIGHT, xPosition,yPosition, keyUP, keyDOWN, keyE;
 let character = null;
 let centerX = game.config.width/2, centerY = game.config.height/2;
 let player;
-
+let playerX = 50, playerY = 450;
 const textSpacer = 64;
 
 let highScore;

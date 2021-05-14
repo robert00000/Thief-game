@@ -26,6 +26,7 @@ class Play extends Phaser.Scene{
 
         this.block2 = this.physics.add.sprite(600,10,'Block').setOrigin(0.5);
         this.block2.body.onWorldBounds = true;
+        this.block2.body.setImmovable = true;
         this.block2.body.onOverlap = true;
         this.block2.setCollideWorldBounds(true);
 
@@ -44,8 +45,8 @@ class Play extends Phaser.Scene{
         
         // Code for where the player is defined.
          
-        player = new Player(this, 50, 450, 'Player').setOrigin(0.5);
-
+        player = new Player(this, playerX, 450, 'Player').setOrigin(0.5);
+        
         player.body.onCollide = true;      // must be set for collision event to work
         player.body.onWorldBounds = true;  // ditto for worldbounds
         //player.setBounce(0.2);  
@@ -138,9 +139,10 @@ class Play extends Phaser.Scene{
         }
 
         if(this.physics.collide(player, this.block2)){
-            
+            //this.scene.sleep('playScene');
+            playerX = player.x
             this.scene.start('scene2');
-            
+             
         }
 
         
