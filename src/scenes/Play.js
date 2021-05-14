@@ -160,6 +160,7 @@ class Play extends Phaser.Scene{
         if(this.physics.collide(player, this.block2)){
             //this.scene.sleep('playScene');
             playerX = player.x
+            this.sound.play('select');
             this.scene.start('scene2');
              
         }

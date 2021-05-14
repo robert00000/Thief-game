@@ -83,7 +83,7 @@ class Scene2 extends Phaser.Scene{
         
         if(this.physics.collide(player, this.block)){
             //this.scene.sleep('scene2')
-            
+            this.sound.play('select');
             this.scene.start('playScene');
             
         }
