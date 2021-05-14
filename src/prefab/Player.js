@@ -10,14 +10,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         cursors = scene.input.keyboard.createCursorKeys();
     }
-
+    preload(){
+        this.load.audio('Footsteps', './assets/footsteps.wav');
+    }
     update(){
+        
         if (cursors.left.isDown)
         {
+            //this.sound.play('Footsteps');
             player.setVelocityX(-160);
         }
         else if (cursors.right.isDown)
         {
+            //this.sound.play('Footsteps');
             player.setVelocityX(160);
         }   
         else{

@@ -59,6 +59,9 @@ class Scene2 extends Phaser.Scene{
         this.physics.add.collider(this.block, this.platform);
         this.physics.add.collider(player, this.platform2);
         this.physics.add.collider(player, this.platform);
+
+        this.footsteps = this.sound.add('Footsteps');
+
         //Camera following
         this.cameras.main.startFollow(player);
     }
@@ -74,6 +77,19 @@ class Scene2 extends Phaser.Scene{
             this.scene.start('playScene');
             
         }
+
+        if(cursors.right.isDown){
+            this.footsteps.mute = false;
+            this.footsteps.play(footstepConfig);
+        }
+        else if (cursors.left.isDown){
+            this.footsteps.mute = false;
+            this.footsteps.play(footstepConfig);
+        }
+        else{
+            this.footsteps.mute = true;
+        }
+
         if (this.movingPlatform.x >= 500)
         {
             this.movingPlatform.setVelocityX(-50);

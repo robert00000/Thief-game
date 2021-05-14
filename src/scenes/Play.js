@@ -100,17 +100,28 @@ class Play extends Phaser.Scene{
         scoreConfig.fixedWidth = 0;
 
         //creating play clock
-        this.clock = this.time.delayedCall(startTime, () => {}, null, this); 
+        //this.clock = this.time.delayedCall(startTime, () => {}, null, this); 
 
         //creates timer display
         //scoreConfig.color = "#843605";
-        this.timer = this.add.text(game.config.width/2, 100, this.clock.getElapsedSeconds(), scoreConfig).setOrigin(0.5);
+        //this.timer = this.add.text(game.config.width/2, 100, this.clock.getElapsedSeconds(), scoreConfig).setOrigin(0.5);
         
 
 
         
         
+        this.footsteps = this.sound.add('Footsteps');
+        footstepConfig = {
+            mute: false,
+            volume: .2,
+            rate: .5,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
 
+
+        }
 
         //Timer for the spawning of things.
         var timer = this.time.addEvent({
@@ -135,13 +146,14 @@ class Play extends Phaser.Scene{
     
     update(){
         
-        this.moveText();
+        //this.moveText();
         player.update();
         //updates timer
-        this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
+        //this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
         //play animations
         player.anims.play('running', true);
         if(!this.physics.collide(player, this.block)){
+            
             this.block.setVelocityX(0)
         }
 
@@ -152,7 +164,17 @@ class Play extends Phaser.Scene{
              
         }
 
-        
+        if(cursors.right.isDown){
+            this.footsteps.mute = false;
+            this.footsteps.play(footstepConfig);
+        }
+        else if (cursors.left.isDown){
+            this.footsteps.mute = false;
+            this.footsteps.play(footstepConfig);
+        }
+        else{
+            this.footsteps.mute = true;
+        }
 
         if (movingPlatform.x >= 500)
         {
@@ -165,7 +187,7 @@ class Play extends Phaser.Scene{
         
     }
     //Could possibly randomize sprites positions.
-
+    
     getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -176,15 +198,15 @@ class Play extends Phaser.Scene{
 
     
     
-    moveText(){
-        this.tweens.add({
-            targets: this.clock.getElapsedSeconds(),
-            y: 200,
-            x: 300,
-            duration: 500,
-            ease: 'Power2',
+    // moveText(){
+    //     this.tweens.add({
+    //         targets: this.clock.getElapsedSeconds(),
+    //         y: 200,
+    //         x: 300,
+    //         duration: 500,
+    //         ease: 'Power2',
             
-        });
-    }
+    //     });
+    // }
     
 }
