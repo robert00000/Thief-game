@@ -41,9 +41,9 @@ let widthSpacer = game.config.width/5;
 let halfHeight = game.config.height/2;
 let swap = null;
 let cursors = null;
-let weaponCheck = false;
+
 let music;
-let enemyGroup = null;
+
 let time = 0;
 // this is to detect the time elapsed
 let startTime = new Date();
