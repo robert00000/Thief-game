@@ -8,6 +8,8 @@ class Title extends Phaser.Scene {
         
         this.load.audio('select', './assets/Select.wav');
         this.load.audio('Footsteps', './assets/footsteps.wav');
+        this.load.audio('Jump', './assets/Jump.mp3');
+
         this.load.image ('background','./assets/BG.png');
         this.load.image('Chest', './assets/Chest.png');
         this.load.image('Barrier', './assets/Barrier.png');
