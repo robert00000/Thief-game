@@ -87,7 +87,10 @@ class Scene2 extends Phaser.Scene{
             this.scene.start('playScene');
             
         }
-
+        if (cursors.up.isDown && player.body.blocked.down ){
+            this.sound.play('Jump');
+        }
+        
         if(cursors.right.isDown){
             this.footsteps.mute = false;
             this.footsteps.play(footstepConfig);
