@@ -2,8 +2,13 @@
 // Knight Runner      
 //Date completed: 5/3/21
 
+"use strict";
+
 let config = {
     type: Phaser.CANVAS,
+    render: {
+        pixelArt: true
+    },
     width: 640,
     height: 480,
     physics: {
@@ -16,7 +21,7 @@ let config = {
             }
         }
     },
-    scene: [ Title, Play,GameOver, Credits ,Scene2]   
+    scene: [ Title, Play, GameOver, Credits ,Scene2 ]   
     
 }
 

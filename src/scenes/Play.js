@@ -6,17 +6,44 @@ class Play extends Phaser.Scene{
         //this.load.image('Player', './assets/Knightp1.png');
         
         this.load.spritesheet('Player', './assets/KnightAnim2.png', {frameWidth: 71, frameHeight: 81, startFrame: 0, endFrame: 14});
+        this.load.image('microtileset', './assets/tileset.png');
+        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilesettutorial.json');
         
     }
 //Make player 2 as well as add some kind of music.
 
-    create() 
-    {   
+    create() {   
+        const map = this.add.tilemap('tilemapJSON');
+        const tileset = map.addTilesetImage('tileset', 'microtileset');
+        const bgLayer = map.createLayer('BG', tileset, 0, 0);
+        const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
 
-        this.cameras.main.setSize(640, 480);
-        this.cameras.main.setBounds(0,0,1920,1080);
+        terrainLayer.setCollisionByProperty({
+            collides: true
+        });
+
+        // Code for where the player is defined.
+         
+        const p1Spawn = map.findObject('Spawns', obj => obj.name === 'p1Spawn');
+        player = new Player(this, p1Spawn.x, p1Spawn.y, 'Player');
+        
+        player.body.onCollide = true;      // must be set for collision event to work
+        player.body.onWorldBounds = true;  // ditto for worldbounds
+        //player.setBounce(0.2);  
+        player.setDebugBodyColor(0xFFFF00);
+        player.setCollideWorldBounds(true);
+
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.startFollow(player);
+
+        this.physics.world.bounds.setTo(0, 0, map.widthInPixels, map.heightInPixels);
+        this.physics.add.collider(player, terrainLayer);
+
+        this.cursors = this.input.keyboard.createCursorKeys();
+        // this.cameras.main.setSize(640, 480);
+        // this.cameras.main.setBounds(0,0,1920,1080);
         //const cam2 = this.cameras.add(400, 0, 400, 300);
-        this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
+        //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         //This is the create function which creates the playScene for the player.
         this.block = this.physics.add.sprite(300,600,'Chest').setOrigin(0.5);
         //this.block.body.onCollide = true;
@@ -47,16 +74,6 @@ class Play extends Phaser.Scene{
         this.platform.setImmovable(true);
         this.platform.body.setSize(100,100);
         this.platform.body.allowGravity = false;
-        
-        // Code for where the player is defined.
-         
-        player = new Player(this, playerX, 450, 'Player').setOrigin(0.5);
-        
-        player.body.onCollide = true;      // must be set for collision event to work
-        player.body.onWorldBounds = true;  // ditto for worldbounds
-        //player.setBounce(0.2);  
-        player.setDebugBodyColor(0xFFFF00);
-        player.setCollideWorldBounds(true);
 
         //Knight animations
         this.anims.create({
