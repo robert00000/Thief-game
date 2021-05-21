@@ -46,7 +46,7 @@ let widthSpacer = game.config.width/5;
 let halfHeight = game.config.height/2;
 let swap = null;
 let cursors = null;
-
+let jump, jumpConfig;
 let music;
 
 let time = 0;

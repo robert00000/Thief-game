@@ -55,6 +55,17 @@ class Title extends Phaser.Scene {
             },
             fixedWidth: 0
         }
+        jumpConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+
+
+        }
         //this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
         var text1 = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Welcome to Prototype platformer.', menuConfig).setOrigin(0.5);
         text1.setTint(0xff0000);
@@ -67,6 +78,8 @@ class Title extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
         highScore = 0;
+
+        jump = this.sound.add('Jump');
         
     }
 
