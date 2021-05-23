@@ -5,7 +5,7 @@ class Play extends Phaser.Scene{
     preload(){
         //this.load.image('Player', './assets/Knightp1.png');
         
-        this.load.spritesheet('Player', './assets/KnightAnim2.png', {frameWidth: 71, frameHeight: 81, startFrame: 0, endFrame: 14});
+        this.load.spritesheet('Player', './assets/character.png', {frameWidth: 71, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset.png');
         this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilesettutorial.json');
         
@@ -45,9 +45,10 @@ class Play extends Phaser.Scene{
         //const cam2 = this.cameras.add(400, 0, 400, 300);
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         //This is the create function which creates the playScene for the player.
-        this.block = this.physics.add.sprite(300,200,'Chest').setOrigin(0.5);
+        this.block = this.physics.add.sprite(100,200,'Chest').setOrigin(0.5);
         //this.block.body.onCollide = true;
         this.block.body.onWorldBounds = true;
+        this.block.body.setImmovable = true;
         this.block.body.onOverlap = true;
         this.block.setCollideWorldBounds(true);
 
@@ -70,24 +71,30 @@ class Play extends Phaser.Scene{
         // movingPlatform.body.allowGravity = false;
         // movingPlatform.setVelocityX(50);
 
-        this.platform = this.physics.add.sprite(600, 300, 'Barrier');
+        this.platform = this.physics.add.sprite(100, 200, 'Chest');
         this.platform.setImmovable(true);
-        this.platform.body.setSize(100,100);
+        this.platform.body.setSize(50,50);
         this.platform.body.allowGravity = false;
 
-        //Knight animations
-        this.anims.create({
-            key: 'running',
-            frames: this.anims.generateFrameNumbers('Player', {start: 0, end: 14}),
-            frameRate: 20,
-            repeat: -1
-        });
+        platforms.add(this.platform);
+        platforms.add(this.block);
+        
 
         // info text
         //this.message = this.add.text(centerX, 32, 'Awaiting physics world events...').setOrigin(0.5);
         //this.add.text(centerX, game.config.height - 64, 'Use cursor keys to move up and down.').setOrigin(0.5);
-        
-
+        // Objects for this scene
+        this.emeralds = this.physics.add.group({
+            key: 'Gem',
+            repeat: 11,
+            setXY: { x: 100, y: 100, stepX: 50 }
+        });
+        this.emeralds2 = this.physics.add.group({
+            key: 'Gem',
+            repeat: 3,
+            setXY: {x: 100, y: 300, stepX: 50},
+            allowGravity: false
+        })
         
         // define cursors and S key (for Scene switching)
         cursors = this.input.keyboard.createCursorKeys();
@@ -148,11 +155,12 @@ class Play extends Phaser.Scene{
         });
 
         //Adding collision 
-        this.physics.add.collider(player, this.block);
-        this.physics.add.collider(this.block, terrainLayer);
+        //this.physics.add.collider(player, platforms);
+        this.physics.add.collider(platforms, terrainLayer);
         //this.physics.add.collider(player, movingPlatform);
         //this.physics.add.collider(this.platform, player);
-        this.physics.add.collider(this.platform, this.block2);
+        this.physics.add.collider(this.emeralds, terrainLayer);
+        this.physics.add.collider(this.emeralds2, terrainLayer);
         //Camera following
         this.cameras.main.startFollow(player);
 
@@ -169,7 +177,7 @@ class Play extends Phaser.Scene{
         //updates timer
         //this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
         //play animations
-        player.anims.play('running', true);
+        
         if(!this.physics.collide(player, this.block)){
             
             this.block.setVelocityX(0)
@@ -216,7 +224,10 @@ class Play extends Phaser.Scene{
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
 
-
+    collectGem (player, gem)
+    {   
+        gem.disableBody(true, true);
+    }
 
     
     
