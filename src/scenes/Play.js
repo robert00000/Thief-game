@@ -187,18 +187,16 @@ class Play extends Phaser.Scene{
         }
         
 
-        if(cursors.right.isDown){
-            this.footsteps.mute = false;
-            this.footsteps.play(footstepConfig);
+        if(cursors.right.isDown || cursors.left.isDown){
+            if(this.footsteps.mute){
+                this.footsteps.play(footstepConfig);
+                this.footsteps.mute = false;
+            }
         }
-        else if (cursors.left.isDown){
-            this.footsteps.mute = false;
-            this.footsteps.play(footstepConfig);
-        }
-        
         else{
             this.footsteps.mute = true;
         }
+        
 
         // if (movingPlatform.x >= 500)
         // {
