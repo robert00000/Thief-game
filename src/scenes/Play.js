@@ -45,7 +45,7 @@ class Play extends Phaser.Scene{
         //const cam2 = this.cameras.add(400, 0, 400, 300);
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         //This is the create function which creates the playScene for the player.
-        this.block = this.physics.add.sprite(100,200,'Chest').setOrigin(0.5);
+        this.block = this.physics.add.sprite(100,600,'Chest').setOrigin(0.5);
         //this.block.body.onCollide = true;
         this.block.body.onWorldBounds = true;
         this.block.body.setImmovable = true;
@@ -71,12 +71,12 @@ class Play extends Phaser.Scene{
         // movingPlatform.body.allowGravity = false;
         // movingPlatform.setVelocityX(50);
 
-        this.platform = this.physics.add.sprite(100, 200, 'Chest');
-        this.platform.setImmovable(true);
-        this.platform.body.setSize(50,50);
-        this.platform.body.allowGravity = false;
+        // this.platform = this.physics.add.sprite(100, 200, 'Chest');
+        // this.platform.setImmovable(true);
+        // this.platform.body.setSize(50,50);
+        // this.platform.body.allowGravity = false;
 
-        platforms.add(this.platform);
+        
         platforms.add(this.block);
         
 
@@ -86,13 +86,15 @@ class Play extends Phaser.Scene{
         // Objects for this scene
         this.emeralds = this.physics.add.group({
             key: 'Gem',
-            repeat: 11,
-            setXY: { x: 100, y: 100, stepX: 50 }
+            repeat: 5,
+            setXY: { x: 100, y: 120, stepX: 50 },
+            allowGravity: false
         });
+        
         this.emeralds2 = this.physics.add.group({
             key: 'Gem',
-            repeat: 3,
-            setXY: {x: 100, y: 300, stepX: 50},
+            repeat: 2,
+            setXY: {x: 100, y: 250, stepX: 50},
             allowGravity: false
         })
         
@@ -177,7 +179,8 @@ class Play extends Phaser.Scene{
         //updates timer
         //this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
         //play animations
-        
+        // this.scoreCheck(player, this.emeralds);
+        // this.scoreCheck(player,this.emeralds2);
         if(!this.physics.collide(player, this.block)){
             
             this.block.setVelocityX(0)
@@ -229,7 +232,11 @@ class Play extends Phaser.Scene{
         gem.disableBody(true, true);
     }
 
-    
+    scoreCheck(player, gem){
+         if(this.physics.collide(player,gem)){
+             score += 1;
+         }
+     }
     
     // moveText(){
     //     this.tweens.add({
