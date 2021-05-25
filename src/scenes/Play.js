@@ -130,8 +130,8 @@ class Play extends Phaser.Scene{
         this.footsteps = this.sound.add('Footsteps');
         footstepConfig = {
             mute: false,
-            volume: .2,
-            rate: .5,
+            volume: 1,
+            rate: 1,
             detune: 0,
             seek: 0,
             loop: false,
