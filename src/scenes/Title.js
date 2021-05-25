@@ -73,10 +73,12 @@ class Title extends Phaser.Scene {
       
       
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press the R key to start the game\nPress E to see credits.', textConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height-200 + borderUISize + borderPadding, 'Move using the left and right arrow keys. press the up key to jump.', textConfig).setOrigin(0.5);
-        
+        this.add.text(game.config.width/2, game.config.height-200 + borderUISize + borderPadding, 'Press F for the instructions screen.', textConfig).setOrigin(0.5);
+
+
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
+        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         highScore = 0;
 
         jump = this.sound.add('Jump');
@@ -108,6 +110,11 @@ class Title extends Phaser.Scene {
             this.scene.start('Credits')
             this.sound.play('select');
 
+        }
+        if(keyF.isDown)
+        {
+            this.scene.start('Instructions')
+            this.sound.play('select');
         }
         
     }
