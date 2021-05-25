@@ -6,25 +6,50 @@ class Play extends Phaser.Scene{
         //this.load.image('Player', './assets/Knightp1.png');
         
         this.load.spritesheet('Player', './assets/character.png', {frameWidth: 71, frameHeight: 81, startFrame: 0, endFrame: 14});
-        this.load.image('microtileset', './assets/tileset.png');
-        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilesettutorial.json');
+        this.load.image('microtileset', './assets/tileset1.png');
+        this.load.image('2xtileset', './assets/tileset2@2x.png');
+        this.load.tilemapTiledJSON('tilemapJSON', './assets/tileset1.json');
         
     }
 //Make player 2 as well as add some kind of music.
-
+    
     create() {   
+
+
+        let scoreConfig = 
+        {
+        fontFamily: 'Courier',
+        fontSize: '28px',
+        color: '#FEFEFE',
+        align: 'right',
+        padding: {
+          top: 5,
+          bottom: 5,
+        },
+        fixedWidth: 100
+        }
+
+
         const map = this.add.tilemap('tilemapJSON');
         const tileset = map.addTilesetImage('tileset', 'microtileset');
+        const tileset2x = map.addTilesetImage('tileset2', '2xtileset');
+
         const bgLayer = map.createLayer('BG', tileset, 0, 0);
+
+        const itemLayer = map.createLayer('Item', tileset2x, 0, 0);
+        const hazardLayer = map.createLayer('Hazard', tileset2x, 0, 0);
+        
         const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
 
         terrainLayer.setCollisionByProperty({
             collides: true
         });
-
-        // Code for where the player is defined.
+        var child;
+        
          
         const p1Spawn = map.findObject('Spawns', obj => obj.name === 'p1Spawn');
+        const transition = map.findObject('exit', obj => obj.name === 'Transition');
+
         player = new Player(this, p1Spawn.x, p1Spawn.y, 'Player');
         
         player.body.onCollide = true;      // must be set for collision event to work
@@ -62,7 +87,6 @@ class Play extends Phaser.Scene{
         // some variables
         platforms = this.physics.add.staticGroup();
 
-        platforms.create(400, 568, 'Barrier').setScale(2).refreshBody();
         
         // movingPlatform = this.physics.add.image(300, 300, 'Barrier');
         // movingPlatform.body.setSize(100,100);
@@ -77,7 +101,7 @@ class Play extends Phaser.Scene{
         // this.platform.body.allowGravity = false;
 
         
-        platforms.add(this.block);
+        
         
 
         // info text
@@ -88,16 +112,20 @@ class Play extends Phaser.Scene{
             key: 'Gem',
             repeat: 5,
             setXY: { x: 100, y: 120, stepX: 50 },
-            allowGravity: false
+            allowGravity: false,
+            setScale: { x: 0.5, y: 0.5}
         });
         
-        this.emeralds2 = this.physics.add.group({
-            key: 'Gem',
-            repeat: 2,
-            setXY: {x: 100, y: 250, stepX: 50},
-            allowGravity: false
-        })
+        this.gem1 = this.physics.add.sprite(100,250,'Gem').setOrigin(0.5).setScale(.5, .5);
+        this.gem2 = this.physics.add.sprite(200,250,'Gem').setOrigin(0.5).setScale(.5, .5);
+        this.gem3 = this.physics.add.sprite(500,250,'Gem').setOrigin(0.5).setScale(.5, .5);
+        this.emeralds.add(this.gem1);
+        this.emeralds.add(this.gem2);
+        this.emeralds.add(this.gem3);
         
+        
+        
+
         // define cursors and S key (for Scene switching)
         cursors = this.input.keyboard.createCursorKeys();
         swap = this.input.keyboard.addKey('S');
@@ -106,34 +134,9 @@ class Play extends Phaser.Scene{
         });
 
 
-        let scoreConfig = 
-        {
-        fontFamily: 'Courier',
-        fontSize: '28px',
-        color: '#FEFEFE',
-        align: 'right',
-        padding: {
-          top: 5,
-          bottom: 5,
-        },
-        fixedWidth: 100
-        }
-
-        // this.scoreRight = this.add.text(471, 54, this.p2Score, scoreConfig);
-        scoreConfig.color = "#FF0000";
-        this.gameOver = false;
-
-        scoreConfig.fixedWidth = 0;
-
-        //creating play clock
-        //this.clock = this.time.delayedCall(startTime, () => {}, null, this); 
-
-        //creates timer display
-        //scoreConfig.color = "#843605";
-        //this.timer = this.add.text(game.config.width/2, 100, this.clock.getElapsedSeconds(), scoreConfig).setOrigin(0.5);
         
 
-
+        
         
         
         this.footsteps = this.sound.add('Footsteps');
@@ -149,6 +152,9 @@ class Play extends Phaser.Scene{
 
         }
 
+        //Displays the score.
+        this.scoreDisplay = this.add.text(game.config.width/2, 72, score, scoreConfig).setOrigin(0.5);
+
         //Timer for the spawning of things.
         var timer = this.time.addEvent({
             delay: 500,                // ms
@@ -157,16 +163,19 @@ class Play extends Phaser.Scene{
         });
 
         //Adding collision 
-        //this.physics.add.collider(player, platforms);
         this.physics.add.collider(platforms, terrainLayer);
-        //this.physics.add.collider(player, movingPlatform);
-        //this.physics.add.collider(this.platform, player);
+        
         this.physics.add.collider(this.emeralds, terrainLayer);
-        this.physics.add.collider(this.emeralds2, terrainLayer);
+
+        this.physics.add.collider(player, itemLayer);
+
+        this.physics.add.collider(player, hazardLayer);
+        //Next layer will be for the hazards.
+
         //Camera following
         this.cameras.main.startFollow(player);
 
-        
+        this.physics.add.overlap(player, this.emeralds, this.collectGem, null, this);
     }
 
     
@@ -181,10 +190,7 @@ class Play extends Phaser.Scene{
         //play animations
         // this.scoreCheck(player, this.emeralds);
         // this.scoreCheck(player,this.emeralds2);
-        if(!this.physics.collide(player, this.block)){
-            
-            this.block.setVelocityX(0)
-        }
+        
 
         if(this.physics.collide(player, this.block2)){
             //this.scene.sleep('playScene');
@@ -208,7 +214,10 @@ class Play extends Phaser.Scene{
             this.footsteps.mute = true;
         }
         
-
+        if(this.physics.collide(player, this.emeralds)){
+            score += 1;
+        }
+        
         // if (movingPlatform.x >= 500)
         // {
         //     movingPlatform.setVelocityX(-50);
@@ -237,7 +246,11 @@ class Play extends Phaser.Scene{
              score += 1;
          }
      }
-    
+    removeObject(gem){
+        gem.setVelocityX(0);
+        gem.setVelocityY(0);
+        gem = 1000;
+    }
     // moveText(){
     //     this.tweens.add({
     //         targets: this.clock.getElapsedSeconds(),
