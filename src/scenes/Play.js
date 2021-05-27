@@ -8,7 +8,7 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('Player', './assets/character.png', {frameWidth: 71, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset1.png');
         this.load.image('2xtileset', './assets/tileset2@2x.png');
-        this.load.tilemapTiledJSON('tilemapJSON', './assets/tileset1.json');
+        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map1.json');
         
     }
 //Make player 2 as well as add some kind of music.
@@ -31,12 +31,12 @@ class Play extends Phaser.Scene{
 
 
         const map = this.add.tilemap('tilemapJSON');
-        const tileset = map.addTilesetImage('tileset', 'microtileset');
+        const tileset = map.addTilesetImage('tileset1', 'microtileset');
         const tileset2x = map.addTilesetImage('tileset2', '2xtileset');
 
         const bgLayer = map.createLayer('BG', tileset, 0, 0);
 
-        const itemLayer = map.createLayer('Item', tileset2x, 0, 0);
+        //const itemLayer = map.createLayer('Item', tileset, 0, 0);
         const hazardLayer = map.createLayer('Hazard', tileset2x, 0, 0);
         
         const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
@@ -44,13 +44,20 @@ class Play extends Phaser.Scene{
         terrainLayer.setCollisionByProperty({
             collides: true
         });
-        var child;
+        hazardLayer.setCollisionByProperty({
+            collides: true
+        });
         
-         
-        const p1Spawn = map.findObject('Spawns', obj => obj.name === 'p1Spawn');
-        const transition = map.findObject('exit', obj => obj.name === 'Transition');
+        
+        this.hazard = hazardLayer;
 
-        player = new Player(this, p1Spawn.x, p1Spawn.y, 'Player');
+        
+        const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
+        
+        this.spawnx = p1Spawn.x;
+        this.spawnY = p1Spawn.y;
+
+        player = new Player(this, this.spawnx, this.spawnY, 'Player');
         
         player.body.onCollide = true;      // must be set for collision event to work
         player.body.onWorldBounds = true;  // ditto for worldbounds
@@ -70,13 +77,7 @@ class Play extends Phaser.Scene{
         //const cam2 = this.cameras.add(400, 0, 400, 300);
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         //This is the create function which creates the playScene for the player.
-        this.block = this.physics.add.sprite(100,600,'Chest').setOrigin(0.5);
-        //this.block.body.onCollide = true;
-        this.block.body.onWorldBounds = true;
-        this.block.body.setImmovable = true;
-        this.block.body.onOverlap = true;
-        this.block.setCollideWorldBounds(true);
-
+        
         this.block2 = this.physics.add.sprite(600,600,'Gem').setOrigin(0.5);
         this.block2.body.onWorldBounds = true;
         this.block2.body.setImmovable = true;
@@ -110,18 +111,19 @@ class Play extends Phaser.Scene{
         // Objects for this scene
         this.emeralds = this.physics.add.group({
             key: 'Gem',
-            repeat: 5,
-            setXY: { x: 100, y: 120, stepX: 50 },
             allowGravity: false,
+            setXY: {x: 150, y: 100},
             setScale: { x: 0.5, y: 0.5}
         });
         
         this.gem1 = this.physics.add.sprite(100,250,'Gem').setOrigin(0.5).setScale(.5, .5);
         this.gem2 = this.physics.add.sprite(200,250,'Gem').setOrigin(0.5).setScale(.5, .5);
         this.gem3 = this.physics.add.sprite(500,250,'Gem').setOrigin(0.5).setScale(.5, .5);
+        this.gem4 = this.physics.add.sprite(14.67,459.50,'Gem').setOrigin(0.5).setScale(.5, .5);
         this.emeralds.add(this.gem1);
         this.emeralds.add(this.gem2);
         this.emeralds.add(this.gem3);
+        this.emeralds.add(this.gem4);
         
         
         
@@ -167,15 +169,15 @@ class Play extends Phaser.Scene{
         
         this.physics.add.collider(this.emeralds, terrainLayer);
 
-        this.physics.add.collider(player, itemLayer);
-
-        this.physics.add.collider(player, hazardLayer);
+        
+        //this.physics.add.collider(player, hazardLayer);
         //Next layer will be for the hazards.
 
         //Camera following
         this.cameras.main.startFollow(player);
 
         this.physics.add.overlap(player, this.emeralds, this.collectGem, null, this);
+        this.physics.add.overlap( player, hazardLayer);
     }
 
     
@@ -199,6 +201,20 @@ class Play extends Phaser.Scene{
             this.scene.start('scene2');
              
         }
+        if(this.physics.collide(player, this.hazard)){
+            this.resetPlayer();
+            let tw = this.tweens.add({
+                targets: player,
+                alpha: 1,
+                duration: 100,
+                ease: 'Linear',
+                repeat: 5,
+              });
+        }
+        // if(this.physics.collide(player, hazardLayer)){
+        //     player.x = p1Spawn.x;
+        //     player.y = p1SPawn.y
+        // }
         if (cursors.up.isDown && player.body.blocked.down ){
             jump.play(jumpConfig);
         }
@@ -235,21 +251,21 @@ class Play extends Phaser.Scene{
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
-
+    //This disables the item that collides with the player to make it look as though it has been collected.
     collectGem (player, gem)
     {   
         gem.disableBody(true, true);
     }
-
+    //This is meant to increment the score.
     scoreCheck(player, gem){
          if(this.physics.collide(player,gem)){
              score += 1;
          }
      }
-    removeObject(gem){
-        gem.setVelocityX(0);
-        gem.setVelocityY(0);
-        gem = 1000;
+    //This starts the scene to the very beginning.
+    resetPlayer(){
+        this.scene.start('playScene');
+        
     }
     // moveText(){
     //     this.tweens.add({
