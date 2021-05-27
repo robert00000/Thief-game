@@ -40,7 +40,7 @@ let player;
 let playerX = 50, playerY = 450;
 const textSpacer = 64;
 let footstepConfig;
-let highScore;
+let highScore, score;
 let newHighScore = false;
 let widthSpacer = game.config.width/5;
 let halfHeight = game.config.height/2;

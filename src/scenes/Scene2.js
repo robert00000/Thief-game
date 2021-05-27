@@ -15,19 +15,15 @@ class Scene2 extends Phaser.Scene{
         this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
 
         
-        player = new Player(this, 50, 450, 'Player').setOrigin(0.5);
+        player = new Player(this, 50, 600, 'Player').setOrigin(0.5);
 
         player.body.onCollide = true;      // must be set for collision event to work
         player.body.onWorldBounds = true;  // ditto for worldbounds
         //player.setBounce(0.2);  
         player.setDebugBodyColor(0xFFFF00);
         player.setCollideWorldBounds(true);
-
-        this.movingPlatform = this.physics.add.image(100, 100, 'Camera');
-
-        this.movingPlatform.setImmovable(true);
-        this.movingPlatform.body.allowGravity = false;
-        this.movingPlatform.setVelocityX(100);
+        this.platforms = this.physics.add.staticGroup();
+        
         
         //Knight animations
         this.anims.create({
@@ -44,7 +40,8 @@ class Scene2 extends Phaser.Scene{
         this.block.body.onOverlap = true;
         this.block.setCollideWorldBounds(true);
         this.block.setVisible = false;
-
+        
+        
 
 
         this.platform = this.physics.add.sprite(0,300, 'Barrier');
@@ -62,13 +59,14 @@ class Scene2 extends Phaser.Scene{
         this.platform3.body.setSize(100,100);
         this.platform3.body.allowGravity = false;
 
+        this.platforms.add(this.platform);
+        this.platforms.add(this.platform2);
+        this.platforms.add(this.platform3);
+        this.platforms.add(this.movingPlatform);
         //this.physics.add.collider(player, this.block);
-        this.physics.add.collider(player, this.movingPlatform);
+        this.physics.add.collider(player, this.platforms);
         this.physics.add.collider(this.block, this.platform);
-        this.physics.add.collider(player, this.platform2);
-        this.physics.add.collider(player, this.platform);
-        this.physics.add.collider(player, this.platform3);
-
+        
 
         this.footsteps = this.sound.add('Footsteps');
 
