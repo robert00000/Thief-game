@@ -106,7 +106,6 @@ class Title extends Phaser.Scene {
             this.scene.start('playScene');
         }
         if(keyE.isDown){
-            //this.sound.play('sfx_spell');
             this.scene.start('Credits')
             this.sound.play('select');
 

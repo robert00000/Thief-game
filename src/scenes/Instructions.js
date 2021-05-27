@@ -30,14 +30,8 @@ class Instructions extends Phaser.Scene {
             fixedWidth: 0
         }
 
-        if(time > highScore){
-            highScore = time;
-            highScore = highScore.toFixed(2);
-        }
-
-        time = time.toFixed(2);
-        
-        this.add.text(game.config.width/2, game.config.height-200 + borderUISize + borderPadding, 'Move using the left and right arrow keys. press the up key to jump.', textConfig).setOrigin(0.5);
+      
+        this.add.text(game.config.width/2, -100, 'Use Left and Right Arrow keys to Move, UP arrow key to jump.', textConfig).setOrigin(0.5);
 
 
         this.tweens.add({
@@ -80,6 +74,7 @@ class Instructions extends Phaser.Scene {
         
         // wait for UP input to restart game
         if (keyR.isDown) {
+            console.log('hello world');
             this.sound.play('select');
             game.settings = 
             {
@@ -90,6 +85,8 @@ class Instructions extends Phaser.Scene {
             this.scene.start('playScene');
         }
         
+
+
 
     }
 }
