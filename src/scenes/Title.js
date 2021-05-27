@@ -72,8 +72,9 @@ class Title extends Phaser.Scene {
         //text2 = this.add.text(game.config.width/2, game.config.height/2, 'Use UP & DOWN arrows keys to move & (F) to fire', textConfig).setOrigin(0.5);
       
       
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press the R key to start the game\nPress E to see credits.', textConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height-200 + borderUISize + borderPadding, 'Press F for the instructions screen.', textConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press the R key to start the game\nPress E to see credits.\nPress F for instructions.', textConfig).setOrigin(0.5);
+        
+        this.text2 = this.add.text(game.config.width/2, 600 + borderUISize + borderPadding, 'Instructions: Move up by pressing the UP arrow key \nMove left and right using the LEFT RIGHT arrow keys.\nCollect the gems and progress to the next level.', textConfig).setOrigin(0.5);
 
 
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -106,15 +107,22 @@ class Title extends Phaser.Scene {
             this.scene.start('playScene');
         }
         if(keyE.isDown){
-            this.scene.start('Credits')
             this.sound.play('select');
+            this.scene.start('Credits')
+            
 
         }
-        if(keyF.isDown)
-        {
-            this.scene.start('Instructions')
-            this.sound.play('select');
+        if(keyF.isDown){
+            this.tweens.add({
+                targets: this.text2,
+                y: 400,
+                duration: 500,
+                ease: 'Power2',
+               
+            });
+            
         }
+        
         
     }
 }

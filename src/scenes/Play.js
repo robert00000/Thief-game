@@ -40,7 +40,7 @@ class Play extends Phaser.Scene{
         const hazardLayer = map.createLayer('Hazard', tileset2x, 0, 0);
         
         const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
-
+        
         terrainLayer.setCollisionByProperty({
             collides: true
         });
@@ -51,8 +51,14 @@ class Play extends Phaser.Scene{
         
         this.hazard = hazardLayer;
 
+        // for(i = 1; i < Objects.count; i++ ){
+
+        // }
         
         const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
+        const itemSpawn = map.createFromObjects('Objects', {gid: 31, key:'Gem'});
+        
+        map.create
         
         this.spawnx = p1Spawn.x;
         this.spawnY = p1Spawn.y;
@@ -110,20 +116,11 @@ class Play extends Phaser.Scene{
         //this.add.text(centerX, game.config.height - 64, 'Use cursor keys to move up and down.').setOrigin(0.5);
         // Objects for this scene
         this.emeralds = this.physics.add.group({
-            key: 'Gem',
-            allowGravity: false,
-            setXY: {x: 150, y: 100},
-            setScale: { x: 0.5, y: 0.5}
+            allowGravity: false
         });
+
         
-        this.gem1 = this.physics.add.sprite(100,250,'Gem').setOrigin(0.5).setScale(.5, .5);
-        this.gem2 = this.physics.add.sprite(200,250,'Gem').setOrigin(0.5).setScale(.5, .5);
-        this.gem3 = this.physics.add.sprite(500,250,'Gem').setOrigin(0.5).setScale(.5, .5);
-        this.gem4 = this.physics.add.sprite(14.67,459.50,'Gem').setOrigin(0.5).setScale(.5, .5);
-        this.emeralds.add(this.gem1);
-        this.emeralds.add(this.gem2);
-        this.emeralds.add(this.gem3);
-        this.emeralds.add(this.gem4);
+        this.emeralds.addMultiple(itemSpawn);
         
         
         
@@ -202,8 +199,9 @@ class Play extends Phaser.Scene{
              
         }
         if(this.physics.collide(player, this.hazard)){
+            this.footsteps.mute = true;
             this.resetPlayer();
-            let tw = this.tweens.add({
+            this.tweens.add({
                 targets: player,
                 alpha: 1,
                 duration: 100,
@@ -254,7 +252,7 @@ class Play extends Phaser.Scene{
     //This disables the item that collides with the player to make it look as though it has been collected.
     collectGem (player, gem)
     {   
-        gem.disableBody(true, true);
+        gem.alpha = 0;
     }
     //This is meant to increment the score.
     scoreCheck(player, gem){
