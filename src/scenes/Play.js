@@ -3,7 +3,6 @@ class Play extends Phaser.Scene{
         super("playScene");
     }
     preload(){
-        //this.load.image('Player', './assets/Knightp1.png');
         
         this.load.spritesheet('Player', './assets/character.png', {frameWidth: 71, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset1.png');
@@ -11,7 +10,6 @@ class Play extends Phaser.Scene{
         this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map1.json');
         
     }
-//Make player 2 as well as add some kind of music.
     
     create() {   
 
@@ -29,11 +27,11 @@ class Play extends Phaser.Scene{
         fixedWidth: 100
         }
 
-
+        //This is where we read files for this scenes map.
         const map = this.add.tilemap('tilemapJSON');
         const tileset = map.addTilesetImage('tileset1', 'microtileset');
         const tileset2x = map.addTilesetImage('tileset2', '2xtileset');
-
+        //Background layer for the map.
         const bgLayer = map.createLayer('BG', tileset, 0, 0);
 
         //const itemLayer = map.createLayer('Item', tileset, 0, 0);
@@ -41,6 +39,7 @@ class Play extends Phaser.Scene{
         
         const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
         
+
         terrainLayer.setCollisionByProperty({
             collides: true
         });
@@ -51,17 +50,29 @@ class Play extends Phaser.Scene{
         
         this.hazard = hazardLayer;
 
-        // for(i = 1; i < Objects.count; i++ ){
-
-        // }
+        //this.exit = this.physics.add(600, 600, 'Gem');
         
         const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
+
         const itemSpawn = map.createFromObjects('Objects', {gid: 31, key:'Gem'});
         
-        map.create
+        const exit = map.findObject('Transition', obj => obj.name === 'exit');
+        
         
         this.spawnx = p1Spawn.x;
         this.spawnY = p1Spawn.y;
+
+
+        //Debug to show different values
+        
+        const gem = this.add.image(75,15, 'Gem').setScale(.5,.5);
+        score = 0;
+        
+        scoreText = this.add.text(85, 10, '', { font: '16px Courier', fill: '#FEFEFE' });
+        this.data.set('score', ' ' + score );
+        scoreText.setText([
+            'X' + this.data.get('score')
+        ]);
 
         player = new Player(this, this.spawnx, this.spawnY, 'Player');
         
@@ -77,18 +88,21 @@ class Play extends Phaser.Scene{
         this.physics.world.bounds.setTo(0, 0, map.widthInPixels, map.heightInPixels);
         this.physics.add.collider(player, terrainLayer);
 
-        this.cursors = this.input.keyboard.createCursorKeys();
+        //Camera settings for this scene.
+
+        // this.cursors = this.input.keyboard.createCursorKeys();
         // this.cameras.main.setSize(640, 480);
         // this.cameras.main.setBounds(0,0,1920,1080);
+        //this.cameras.main.zoom = 2
         //const cam2 = this.cameras.add(400, 0, 400, 300);
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
-        //This is the create function which creates the playScene for the player.
         
-        this.block2 = this.physics.add.sprite(600,600,'Gem').setOrigin(0.5);
-        this.block2.body.onWorldBounds = true;
-        this.block2.body.setImmovable = true;
-        this.block2.body.onOverlap = true;
-        this.block2.setCollideWorldBounds(true);
+        
+        // this.block2 = this.physics.add.sprite(600,600,'Gem').setOrigin(0.5);
+        // this.block2.body.onWorldBounds = true;
+        // this.block2.body.setImmovable = true;
+        // this.block2.body.onOverlap = true;
+        // this.block2.setCollideWorldBounds(true);
 
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         // some variables
@@ -116,14 +130,18 @@ class Play extends Phaser.Scene{
         //this.add.text(centerX, game.config.height - 64, 'Use cursor keys to move up and down.').setOrigin(0.5);
         // Objects for this scene
         this.emeralds = this.physics.add.group({
-            allowGravity: false
+            allowGravity: false, 
         });
 
         
+
+        //Adds all the id's
         this.emeralds.addMultiple(itemSpawn);
         
         
-        
+        this.emeralds.children.iterate((child) =>{
+            child.setScale(.5,.5);
+        })
 
         // define cursors and S key (for Scene switching)
         cursors = this.input.keyboard.createCursorKeys();
@@ -151,9 +169,7 @@ class Play extends Phaser.Scene{
 
         }
 
-        //Displays the score.
-        this.scoreDisplay = this.add.text(game.config.width/2, 72, score, scoreConfig).setOrigin(0.5);
-
+        
         //Timer for the spawning of things.
         var timer = this.time.addEvent({
             delay: 500,                // ms
@@ -173,8 +189,9 @@ class Play extends Phaser.Scene{
         //Camera following
         this.cameras.main.startFollow(player);
 
-        this.physics.add.overlap(player, this.emeralds, this.collectGem, null, this);
+        this.physics.add.collider(player, this.emeralds, this.collectGem, null, this);
         this.physics.add.overlap( player, hazardLayer);
+        this.physics.add.overlap(player, exit, this.exitScene)
     }
 
     
@@ -186,18 +203,8 @@ class Play extends Phaser.Scene{
         player.update();
         //updates timer
         //this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
-        //play animations
-        // this.scoreCheck(player, this.emeralds);
-        // this.scoreCheck(player,this.emeralds2);
         
 
-        if(this.physics.collide(player, this.block2)){
-            //this.scene.sleep('playScene');
-            playerX = player.x
-            this.sound.play('select');
-            this.scene.start('scene2');
-             
-        }
         if(this.physics.collide(player, this.hazard)){
             this.footsteps.mute = true;
             this.resetPlayer();
@@ -209,10 +216,7 @@ class Play extends Phaser.Scene{
                 repeat: 5,
               });
         }
-        // if(this.physics.collide(player, hazardLayer)){
-        //     player.x = p1Spawn.x;
-        //     player.y = p1SPawn.y
-        // }
+        
         if (cursors.up.isDown && player.body.blocked.down ){
             jump.play(jumpConfig);
         }
@@ -228,9 +232,7 @@ class Play extends Phaser.Scene{
             this.footsteps.mute = true;
         }
         
-        if(this.physics.collide(player, this.emeralds)){
-            score += 1;
-        }
+        
         
         // if (movingPlatform.x >= 500)
         // {
@@ -242,7 +244,7 @@ class Play extends Phaser.Scene{
         // }
         
     }
-    //Could possibly randomize sprites positions.
+    //Could possibly be used to randomize sprites positions.
     
     getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -252,28 +254,26 @@ class Play extends Phaser.Scene{
     //This disables the item that collides with the player to make it look as though it has been collected.
     collectGem (player, gem)
     {   
+        gem.x = -300;
         gem.alpha = 0;
+        //Might end up adding an extra point for some reason. Might be because of lag.
+        if(score == 0){
+            score = 1;
+        }
+        else{
+            score += 1;
+        }
+        scoreText.setText('X ' + score);
+        
+        
     }
-    //This is meant to increment the score.
-    scoreCheck(player, gem){
-         if(this.physics.collide(player,gem)){
-             score += 1;
-         }
-     }
     //This starts the scene to the very beginning.
     resetPlayer(){
         this.scene.start('playScene');
         
     }
-    // moveText(){
-    //     this.tweens.add({
-    //         targets: this.clock.getElapsedSeconds(),
-    //         y: 200,
-    //         x: 300,
-    //         duration: 500,
-    //         ease: 'Power2',
-            
-    //     });
-    // }
+    exitScene(){
+        this.scene.start('scene2');
+    }
     
 }

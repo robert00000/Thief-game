@@ -3,8 +3,8 @@
     {
      "export":
         {
-         "format":"json",
-         "target":"Map1.json"
+         "format":"tmx",
+         "target":"Map1.tmx"
         }
     },
  "height":60,
@@ -56,7 +56,7 @@
                 {
                  "height":107.245692707104,
                  "id":3,
-                 "name":"",
+                 "name":"exit",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -106,7 +106,7 @@
                  "gid":31,
                  "height":16,
                  "id":24,
-                 "name":"",
+                 "name":"1",
                  "properties":[
                         {
                          "name":"collides",
@@ -117,14 +117,14 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":272,
-                 "y":120
+                 "x":271.333333333333,
+                 "y":140
                 }, 
                 {
                  "gid":31,
                  "height":16,
                  "id":26,
-                 "name":"",
+                 "name":"2",
                  "properties":[
                         {
                          "name":"collides",
@@ -135,14 +135,14 @@
                  "type":"",
                  "visible":true,
                  "width":15,
-                 "x":336,
-                 "y":120.166666666667
+                 "x":334.666666666667,
+                 "y":138.166666666667
                 }, 
                 {
                  "gid":31,
                  "height":16,
                  "id":27,
-                 "name":"",
+                 "name":"4",
                  "properties":[
                         {
                          "name":"collides",
@@ -160,7 +160,7 @@
                  "gid":31,
                  "height":16,
                  "id":28,
-                 "name":"",
+                 "name":"5",
                  "properties":[
                         {
                          "name":"collides",
@@ -171,31 +171,61 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":14.6666666666667,
-                 "y":459.5
+                 "x":102.666666666667,
+                 "y":462.833333333333
                 }, 
                 {
                  "gid":31,
                  "height":16,
                  "id":29,
-                 "name":"",
+                 "name":"3",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16,
                  "x":518,
                  "y":177.5
+                }, 
+                {
+                 "gid":31,
+                 "height":19,
+                 "id":30,
+                 "name":"6",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":168,
+                 "y":462.166666666667
+                }, 
+                {
+                 "gid":31,
+                 "height":8,
+                 "id":31,
+                 "name":"7",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":8,
+                 "x":433.333333333333,
+                 "y":455.5
                 }],
          "offsetx":2,
          "offsety":-1.5,
          "opacity":1,
+         "properties":[
+                {
+                 "name":"count",
+                 "type":"int",
+                 "value":5
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":30,
+ "nextobjectid":32,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",
