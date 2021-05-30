@@ -7,7 +7,7 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('Player', './assets/character.png', {frameWidth: 71, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset1.png');
         this.load.image('2xtileset', './assets/tileset2@2x.png');
-        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map1.json');
+        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map.json');
         
     }
     
@@ -56,7 +56,7 @@ class Play extends Phaser.Scene{
 
         const itemSpawn = map.createFromObjects('Objects', {gid: 31, key:'Gem'});
         
-        const exit = map.findObject('Transition', obj => obj.name === 'exit');
+        //const playerExit = map.findObject('Transition', obj => obj.name === 'exit');
         
         
         this.spawnx = p1Spawn.x;
@@ -65,14 +65,12 @@ class Play extends Phaser.Scene{
 
         //Debug to show different values
         
-        const gem = this.add.image(75,15, 'Gem').setScale(.5,.5);
+        
         score = 0;
         
-        scoreText = this.add.text(85, 10, '', { font: '16px Courier', fill: '#FEFEFE' });
-        this.data.set('score', ' ' + score );
-        scoreText.setText([
-            'X' + this.data.get('score')
-        ]);
+        //scoreText = this.add.text(85, 10, '', { font: '16px Courier', fill: '#FEFEFE' });
+        this.data.set('score', ' ' + 0 );
+        
 
         player = new Player(this, this.spawnx, this.spawnY, 'Player');
         
@@ -90,10 +88,20 @@ class Play extends Phaser.Scene{
 
         //Camera settings for this scene.
 
-        // this.cursors = this.input.keyboard.createCursorKeys();
-        // this.cameras.main.setSize(640, 480);
-        // this.cameras.main.setBounds(0,0,1920,1080);
-        //this.cameras.main.zoom = 2
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.cameras.main.setSize(640, 480);
+        this.cameras.main.setBounds(0,0,640,480);
+        this.cameras.main.setDeadzone(50, 50);
+        this.cameras.main.zoom = 2;
+
+        if(this.cameras.main.deadzone){
+            const graphics = this.add.graphics().setScrollFactor(0);
+            graphics.lineStyle(2, 0x00ff00, 1);
+            
+        }
+        scoreText = this.add.text(220, 140, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
+        scoreText.setText('X ' + score);
+        const gem = this.add.image(200, 145, 'Gem').setScale(.5,.5).setScrollFactor(0);
         //const cam2 = this.cameras.add(400, 0, 400, 300);
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         
@@ -152,10 +160,6 @@ class Play extends Phaser.Scene{
 
 
         
-
-        
-        
-        
         this.footsteps = this.sound.add('Footsteps');
         footstepConfig = {
             mute: false,
@@ -191,7 +195,7 @@ class Play extends Phaser.Scene{
 
         this.physics.add.collider(player, this.emeralds, this.collectGem, null, this);
         this.physics.add.overlap( player, hazardLayer);
-        this.physics.add.overlap(player, exit, this.exitScene)
+        //this.physics.add.overlap(player, playerExit.exit, this.exitScene)
     }
 
     
@@ -203,18 +207,11 @@ class Play extends Phaser.Scene{
         player.update();
         //updates timer
         //this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
-        
+        const cam = this.cameras.main;
 
         if(this.physics.collide(player, this.hazard)){
             this.footsteps.mute = true;
             this.resetPlayer();
-            this.tweens.add({
-                targets: player,
-                alpha: 1,
-                duration: 100,
-                ease: 'Linear',
-                repeat: 5,
-              });
         }
         
         if (cursors.up.isDown && player.body.blocked.down ){
@@ -233,7 +230,6 @@ class Play extends Phaser.Scene{
         }
         
         
-        
         // if (movingPlatform.x >= 500)
         // {
         //     movingPlatform.setVelocityX(-50);
@@ -243,6 +239,9 @@ class Play extends Phaser.Scene{
         //     movingPlatform.setVelocityX(50);
         // }
         
+
+
+
     }
     //Could possibly be used to randomize sprites positions.
     
@@ -254,17 +253,19 @@ class Play extends Phaser.Scene{
     //This disables the item that collides with the player to make it look as though it has been collected.
     collectGem (player, gem)
     {   
+        const cam = this.cameras.main;
         gem.x = -300;
         gem.alpha = 0;
-        //Might end up adding an extra point for some reason. Might be because of lag.
+        //Might end up adding an extra point for some reason. Might be because of lag in the collision system.
         if(score == 0){
             score = 1;
         }
         else{
             score += 1;
         }
-        scoreText.setText('X ' + score);
-        
+        if (cam.deadzone){
+            scoreText.setText('X ' + score);
+        }
         
     }
     //This starts the scene to the very beginning.
