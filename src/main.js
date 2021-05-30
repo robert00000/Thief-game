@@ -42,6 +42,7 @@ const textSpacer = 64;
 let footstepConfig;
 let highScore, score = 0;
 let newHighScore = false;
+let forward = true;
 let widthSpacer = game.config.width/5;
 let halfHeight = game.config.height/2;
 let swap = null;

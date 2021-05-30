@@ -4,15 +4,63 @@ class Play extends Phaser.Scene{
     }
     preload(){
         
-        this.load.spritesheet('Player', './assets/character.png', {frameWidth: 71, frameHeight: 81, startFrame: 0, endFrame: 14});
+        //this.load.spritesheet('Player', './assets/character.png', {frameWidth: 50, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset1.png');
         this.load.image('2xtileset', './assets/tileset2@2x.png');
         this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map.json');
+        this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
+        this.load.image('LStill', './assets/LStill.png');
+        this.load.image('RStill', './assets/RStill.png');
         
     }
     
     create() {   
+        //Thief sprite
+        this.anims.create({
+            key: 'leftstill',
+            frames: this.anims.generateFrameNames('thief', { prefix: 'LStill', end: 0}),
+        });
 
+        this.anims.create({
+            key: 'rightstill',
+            frames: this.anims.generateFrameNames('thief', { prefix: 'RStill', end: 0}),
+        });
+
+        this.anims.create({
+            key: 'left',
+            frames: this.anims.generateFrameNames('thief', { prefix: 'L', end: 6 }),
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNames('thief', { prefix: 'R', end: 6 }),
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.anims.create({
+            key: 'jumpleft',
+            frames: this.anims.generateFrameNames('thief', { prefix: 'JL', end: 5 }),
+        });
+
+        this.anims.create({
+            key: 'jumpright',
+            frames: this.anims.generateFrameNames('thief', { prefix: 'JR', end: 5 }),
+        });
+
+        // this.anims.create({
+        //     key: 'fallleft',
+        //     frames: this.anims.generateFrameNames('thief', { prefix: 'JL', begin: 4, end: 6, zeroPad: 1 }),
+        //     frameRate: 1,
+        // });
+        
+        // this.anims.create({
+        //     key: 'fallright',
+        //     frames: this.anims.generateFrameNames('thief', { prefix: 'JR', begin: 4, end: 6, zeroPad: 1 }),
+        //     frameRate: 1,
+        // });
 
         let scoreConfig = 
         {
@@ -72,7 +120,7 @@ class Play extends Phaser.Scene{
         this.data.set('score', ' ' + 0 );
         
 
-        player = new Player(this, this.spawnx, this.spawnY, 'Player');
+        player = new Player(this, this.spawnx, this.spawnY, 'RStill');
         
         player.body.onCollide = true;      // must be set for collision event to work
         player.body.onWorldBounds = true;  // ditto for worldbounds
@@ -204,7 +252,33 @@ class Play extends Phaser.Scene{
     update(){
         
         //this.moveText();
+        //Player updating
         player.update();
+        if (cursors.left.isDown && player.body.blocked.down)
+        {
+            forward = false;
+            player.anims.play('left', true);
+        }
+        else if (cursors.right.isDown && player.body.blocked.down)
+        {
+            forward = true;
+            player.anims.play('right', true);
+        }   
+        else{
+            if (forward) {
+                if(!player.body.blocked.down){
+                    player.anims.play('jumpright');
+                }else{
+                    player.anims.play('rightstill');
+                }
+            }else{
+                if(!player.body.blocked.down){
+                    player.anims.play('jumpleft');
+                }else{
+                    player.anims.play('leftstill');
+                }
+            }
+        }
         //updates timer
         //this.timer.text = (game.settings.gameTimer / 1000) + Math.floor(this.clock.getElapsedSeconds());
         const cam = this.cameras.main;
