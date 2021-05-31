@@ -211,7 +211,7 @@ class Play extends Phaser.Scene{
         this.footsteps = this.sound.add('Footsteps');
         footstepConfig = {
             mute: false,
-            volume: 1,
+            volume: .3,
             rate: 1,
             detune: 0,
             seek: 0,
@@ -284,8 +284,17 @@ class Play extends Phaser.Scene{
         const cam = this.cameras.main;
 
         if(this.physics.collide(player, this.hazard)){
-            this.footsteps.mute = true;
+            this.sound.play('collision');
             this.resetPlayer();
+            this.footsteps.mute = true;
+            let tw = this.tweens.add({
+                targets: player,
+                alpha: 1,
+                duration: 100,
+                ease: 'Linear',
+                repeat: 5,
+              });
+
         }
         
         if (cursors.up.isDown && player.body.blocked.down ){
@@ -327,6 +336,7 @@ class Play extends Phaser.Scene{
     //This disables the item that collides with the player to make it look as though it has been collected.
     collectGem (player, gem)
     {   
+        this.sound.play('pickup');
         const cam = this.cameras.main;
         gem.x = -300;
         gem.alpha = 0;
