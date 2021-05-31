@@ -31,45 +31,43 @@ class Instructions extends Phaser.Scene {
         }
         
         this.text1 = this.add.text(game.config.width/2, -100, 'Instructions', menuConfig).setOrigin(0.5);
-        this.text2 = this.add.text(game.config.width/2, -150, 'Use Left and Right Arrow keys to Move, UP arrow key to jump.', textConfig).setOrigin(0.5);
-        this.text3 = this.add.text(game.config.width/2 -200, 'sdfsdfsdf', textConfig).setOrigin(0.5);
+        this.text2 = this.add.text(game.config.width/2, 700, 'Use Left and Right Arrow keys to Move, UP arrow key to jump.', textConfig).setOrigin(0.5);
+        this.text3 = this.add.text(game.config.width/2 -100, 'sdfsdfsdf', textConfig).setOrigin(0.5);
       
 
 
 
         this.tweens.add({
-             targets: this.text2,
-             y: 100,
-             duration: 500,
-             ease: 'Power2',
-            
-         });
-         this.tweens.add({
-             targets: this.text1,
-             y: 250,
-             duration: 500,
-             ease: 'Power2',
-            
-         });
-         this.tweens.add({
-             targets: this.text3,
-             y: 300,
-             //duration: 500,
-             delay: 500,
-             ease: 'Power2',
-            
-         });
-         this.tweens.add({
-             targets: this.text4,
-             y: 350,
-             //duration: 500,
-             delay: 2000,
-             ease: 'Power2',
-            
-         });
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        
-        
+            targets: this.text2,
+            y: 100,
+            duration: 500,
+            ease: 'Power2',
+           
+        });
+        this.tweens.add({
+            targets: this.text1,
+            y: 250,
+            duration: 500,
+            ease: 'Power2',
+           
+        });
+        this.tweens.add({
+            targets: this.text3,
+            y: 300,
+            //duration: 500,
+            delay: 500,
+            ease: 'Power2',
+           
+        });
+        this.tweens.add({
+            targets: this.text4,
+            y: 350,
+            //duration: 500,
+            delay: 2000,
+            ease: 'Power2',
+           
+        });
+       keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         // time = 0;
     }
 

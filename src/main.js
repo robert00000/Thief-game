@@ -26,7 +26,7 @@ let config = {
 }
 
 let game = new Phaser.Game(config);
-
+let scoreText;
 // set UI sizes
 let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
@@ -40,8 +40,9 @@ let player;
 let playerX = 50, playerY = 450;
 const textSpacer = 64;
 let footstepConfig;
-let highScore, score;
+let highScore, score = 0;
 let newHighScore = false;
+let forward = true;
 let widthSpacer = game.config.width/5;
 let halfHeight = game.config.height/2;
 let swap = null;

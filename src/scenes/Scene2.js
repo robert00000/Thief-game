@@ -5,9 +5,6 @@ class Scene2 extends Phaser.Scene{
     preload(){
         this.load.image('ground', './assets');
     }
-    init(){
-
-    }
     create(){
         this.cameras.main.setSize(640, 480);
         this.cameras.main.setBounds(0,0,1920,1080);
