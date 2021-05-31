@@ -142,11 +142,6 @@ class Play extends Phaser.Scene{
         this.cameras.main.setDeadzone(50, 50);
         this.cameras.main.zoom = 2;
 
-        if(this.cameras.main.deadzone){
-            const graphics = this.add.graphics().setScrollFactor(0);
-            graphics.lineStyle(2, 0x00ff00, 1);
-            
-        }
         scoreText = this.add.text(220, 140, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         scoreText.setText('X ' + score);
         const gem = this.add.image(200, 145, 'Gem').setScale(.5,.5).setScrollFactor(0);
