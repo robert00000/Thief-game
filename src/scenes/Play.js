@@ -144,7 +144,7 @@ class Play extends Phaser.Scene{
         this.footsteps = this.sound.add('Footsteps');
         footstepConfig = {
             mute: false,
-            volume: 1,
+            volume: .3,
             rate: 1,
             detune: 0,
             seek: 0,
@@ -202,7 +202,9 @@ class Play extends Phaser.Scene{
              
         }
         if(this.physics.collide(player, this.hazard)){
+            this.sound.play('collision');
             this.resetPlayer();
+            this.footsteps.mute = true;
             let tw = this.tweens.add({
                 targets: player,
                 alpha: 1,
@@ -255,6 +257,8 @@ class Play extends Phaser.Scene{
     collectGem (player, gem)
     {   
         gem.disableBody(true, true);
+        this.sound.play('pickup');
+        
     }
     //This is meant to increment the score.
     scoreCheck(player, gem){
