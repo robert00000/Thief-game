@@ -7,7 +7,7 @@ class Play extends Phaser.Scene{
         //this.load.spritesheet('Player', './assets/character.png', {frameWidth: 50, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset1.png');
         this.load.image('2xtileset', './assets/tileset2@2x.png');
-        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map.json');
+        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map1.json');
         this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
         this.load.image('LStill', './assets/LStill.png');
         this.load.image('RStill', './assets/RStill.png');
@@ -87,17 +87,20 @@ class Play extends Phaser.Scene{
         
         const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
         
-
+        const transitionLayer = map.createLayer('Transition', tileset, 0, 0); 
         terrainLayer.setCollisionByProperty({
             collides: true
         });
         hazardLayer.setCollisionByProperty({
             collides: true
         });
-        
+        transitionLayer.setCollisionByProperty({
+            collides: true
+        });
+        transitionLayer.alpha = 0
         
         this.hazard = hazardLayer;
-
+        this.transition = transitionLayer;
         //this.exit = this.physics.add(600, 600, 'Gem');
         
         const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
@@ -291,7 +294,11 @@ class Play extends Phaser.Scene{
               });
 
         }
-        
+        if(this.physics.collide(player, this.transition)){
+            this.sound.play('collision');
+            this.exitScene();
+            this.footsteps.mute = true;
+        }
         if (cursors.up.isDown && player.body.blocked.down ){
             jump.play(jumpConfig);
         }
@@ -353,7 +360,7 @@ class Play extends Phaser.Scene{
         
     }
     exitScene(){
-        this.scene.start('scene2');
+        this.scene.start('titleScene');
     }
     
 }
