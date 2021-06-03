@@ -9,6 +9,7 @@ class Play extends Phaser.Scene{
         this.load.image('2xtileset', './assets/tileset2@2x.png');
         this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map.json');
         this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
+        this.load.atlas('collect', 'assets/Collect.png', 'assets/Collect.json');
         this.load.image('LStill', './assets/LStill.png');
         this.load.image('RStill', './assets/RStill.png');
         
@@ -50,17 +51,12 @@ class Play extends Phaser.Scene{
             frames: this.anims.generateFrameNames('thief', { prefix: 'JR', end: 5 }),
         });
 
-        // this.anims.create({
-        //     key: 'fallleft',
-        //     frames: this.anims.generateFrameNames('thief', { prefix: 'JL', begin: 4, end: 6, zeroPad: 1 }),
-        //     frameRate: 1,
-        // });
-        
-        // this.anims.create({
-        //     key: 'fallright',
-        //     frames: this.anims.generateFrameNames('thief', { prefix: 'JR', begin: 4, end: 6, zeroPad: 1 }),
-        //     frameRate: 1,
-        // });
+        //Collection anim
+        this.anims.create({
+            key: 'Collect',
+            frames: this.anims.generateFrameNames('collect', { prefix: 'Collect', end: 6}),
+            hideOnComplete: true
+        });
 
         let scoreConfig = 
         {
@@ -333,8 +329,8 @@ class Play extends Phaser.Scene{
     {   
         this.sound.play('pickup');
         const cam = this.cameras.main;
-        gem.x = -300;
-        gem.alpha = 0;
+        gem.anims.play('Collect');
+        gem.body.destroy();
         //Might end up adding an extra point for some reason. Might be because of lag in the collision system.
         if(score == 0){
             score = 1;
