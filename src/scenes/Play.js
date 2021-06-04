@@ -98,14 +98,10 @@ class Play extends Phaser.Scene{
         this.exit = transitionLayer;
         this.exit.alpha = 0;
         mapCount = 0;
-        //this.exit = this.physics.add(600, 600, 'Gem');
         
         const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
 
         const itemSpawn = map.createFromObjects('Objects', {gid: 31, key:'Gem'});
-        
-        //const playerExit = map.findObject('Transition', obj => obj.name === 'exit');
-        
         
         this.spawnx = p1Spawn.x;
         this.spawnY = p1Spawn.y;
