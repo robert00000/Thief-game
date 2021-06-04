@@ -141,11 +141,11 @@ class Scene2 extends Phaser.Scene{
         //this.cameras.main.setSize(640, 480);
         //this.cameras.main.setBounds(0,0,map.widthInPixels,map.heightInPixels);
         this.cameras.main.setDeadzone(50, 50);
-        this.cameras.main.zoom = 1.5;
+        this.cameras.main.zoom = 1.15;
 
-        scoreText = this.add.text(220, 140, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
+        scoreText = this.add.text(220, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         scoreText.setText('X ' + score);
-        const gem = this.add.image(200, 145, 'Gem').setScale(.5,.5).setScrollFactor(0);
+        const gem = this.add.image(200, 65, 'Gem').setScale(.5,.5).setScrollFactor(0);
         //const cam2 = this.cameras.add(400, 0, 400, 300);
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         
