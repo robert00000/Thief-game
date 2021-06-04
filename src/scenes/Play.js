@@ -7,7 +7,7 @@ class Play extends Phaser.Scene{
         //this.load.spritesheet('Player', './assets/character.png', {frameWidth: 50, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset1.png');
         this.load.image('2xtileset', './assets/tileset2@2x.png');
-        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map.json');
+        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map1.json');
         this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
         this.load.atlas('collect', 'assets/Collect.png', 'assets/Collect.json');
         this.load.image('LStill', './assets/LStill.png');
@@ -83,17 +83,21 @@ class Play extends Phaser.Scene{
         
         const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
         
-
+        const transitionLayer = map.createLayer('Transition', tileset, 0, 0);
         terrainLayer.setCollisionByProperty({
             collides: true
         });
         hazardLayer.setCollisionByProperty({
             collides: true
         });
-        
+        transitionLayer.setCollisionByProperty({
+            collides: true
+        })
         
         this.hazard = hazardLayer;
-
+        this.exit = transitionLayer;
+        this.exit.alpha = 0;
+        mapCount = 0;
         //this.exit = this.physics.add(600, 600, 'Gem');
         
         const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
@@ -133,10 +137,10 @@ class Play extends Phaser.Scene{
         //Camera settings for this scene.
 
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.cameras.main.setSize(640, 480);
-        this.cameras.main.setBounds(0,0,640,480);
+        //this.cameras.main.setSize(640, 480);
+        //this.cameras.main.setBounds(0,0,map.widthInPixels,map.heightInPixels);
         this.cameras.main.setDeadzone(50, 50);
-        this.cameras.main.zoom = 2;
+        this.cameras.main.zoom = 1.5;
 
         scoreText = this.add.text(220, 140, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         scoreText.setText('X ' + score);
@@ -234,7 +238,6 @@ class Play extends Phaser.Scene{
 
         this.physics.add.collider(player, this.emeralds, this.collectGem, null, this);
         this.physics.add.overlap( player, hazardLayer);
-        //this.physics.add.overlap(player, playerExit.exit, this.exitScene)
     }
 
     
@@ -287,7 +290,10 @@ class Play extends Phaser.Scene{
               });
 
         }
-        
+        if(this.physics.collide(player, this.exit)){
+            this.sound.play('pickup');
+            this.scene.start('scene2');
+        }
         if (cursors.up.isDown && player.body.blocked.down ){
             jump.play(jumpConfig);
         }
@@ -334,9 +340,11 @@ class Play extends Phaser.Scene{
         //Might end up adding an extra point for some reason. Might be because of lag in the collision system.
         if(score == 0){
             score = 1;
+            mapCount += 1;
         }
         else{
             score += 1;
+            mapCount += 1;
         }
         if (cam.deadzone){
             scoreText.setText('X ' + score);
@@ -349,7 +357,9 @@ class Play extends Phaser.Scene{
         
     }
     exitScene(){
+        this.footsteps.mute = true;
         this.scene.start('scene2');
+        this.footsteps.mute = true;
     }
     
 }
