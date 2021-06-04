@@ -7,7 +7,7 @@ class Scene2 extends Phaser.Scene{
         //this.load.spritesheet('Player', './assets/character.png', {frameWidth: 50, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset1.png');
         this.load.image('2xtileset', './assets/tileset2@2x.png');
-        this.load.tilemapTiledJSON('tilemapJSON2', './assets/Tilemaps/Map3.json');
+        this.load.tilemapTiledJSON('tilemapJSON2', './assets/Tilemaps/Map2.json');
         this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
         this.load.atlas('collect', 'assets/Collect.png', 'assets/Collect.json');
         this.load.image('LStill', './assets/LStill.png');
@@ -84,6 +84,8 @@ class Scene2 extends Phaser.Scene{
         const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
         
         const transitionLayer = map.createLayer('Transition', tileset, 0, 0);
+
+        const hiddenLayer = map.createLayer('Hidden wall1', tileset, 0, 0);
         terrainLayer.setCollisionByProperty({
             collides: true
         });
@@ -176,8 +178,7 @@ class Scene2 extends Phaser.Scene{
         
 
         // info text
-        //this.message = this.add.text(centerX, 32, 'Awaiting physics world events...').setOrigin(0.5);
-        //this.add.text(centerX, game.config.height - 64, 'Use cursor keys to move up and down.').setOrigin(0.5);
+        
         // Objects for this scene
         this.emeralds = this.physics.add.group({
             allowGravity: false, 
