@@ -21,7 +21,7 @@ let config = {
             }
         }
     },
-    scene: [ Title, Play, GameOver, Credits ,Scene2 ]   
+    scene: [ Title, Play, GameOver, Credits , Scene2, Scene3 ]   
     
 }
 
