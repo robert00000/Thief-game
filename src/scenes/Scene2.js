@@ -345,12 +345,9 @@ class Scene2 extends Phaser.Scene{
         gem.anims.play('Collect');
         gem.body.destroy();
         //Might end up adding an extra point for some reason. Might be because of lag in the collision system.
-        if(score == 0){
-            score = 1;
-        }
-        else{
-            score += 1;
-        }
+        
+        score += 1;
+        
         if (cam.deadzone){
             scoreText.setText('X ' + score);
         }
