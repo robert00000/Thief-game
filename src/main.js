@@ -51,6 +51,8 @@ let jump, jumpConfig;
 let music;
 let mapCount = 0;
 let time = 0;
+let dCounter = 0;
+let deathText = 0;
 // this is to detect the time elapsed
 let startTime = new Date();
 let endTime = new Date();

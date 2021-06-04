@@ -140,7 +140,11 @@ class Play extends Phaser.Scene{
 
         scoreText = this.add.text(220, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         scoreText.setText('X ' + score);
+        deathText = this.add.text(300, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
+        deathText.setText('Deaths ' + dCounter);
+
         const gem = this.add.image(200, 65, 'Gem').setScale(.5,.5).setScrollFactor(0);
+        
         //const cam2 = this.cameras.add(400, 0, 400, 300);
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         
@@ -277,6 +281,11 @@ class Play extends Phaser.Scene{
             this.sound.play('collision');
             this.resetPlayer();
             this.footsteps.mute = true;
+            dCounter += 1;
+            if (cam.deadzone){
+                deathText.setText('Deaths: ' + dCounter);
+            }
+
             let tw = this.tweens.add({
                 targets: player,
                 alpha: 1,
@@ -347,6 +356,7 @@ class Play extends Phaser.Scene{
         }
         
     }
+    
     //This starts the scene to the very beginning.
     resetPlayer(){
         this.scene.start('playScene');
