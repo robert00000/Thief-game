@@ -114,7 +114,8 @@ class Play extends Phaser.Scene{
 
 
         //Debug to show different values
-        
+        initCount = mapCount;
+        mapCount = initCount;
         
         score = 0;
         
@@ -210,10 +211,12 @@ class Play extends Phaser.Scene{
 
         // define cursors and S key (for Scene switching)
         cursors = this.input.keyboard.createCursorKeys();
+
         let swap = this.input.keyboard.addKey('S');
         swap.on('down', () => {
             this.scene.start("gameOverScene");
         });
+
 
 
         

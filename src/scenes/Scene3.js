@@ -15,6 +15,7 @@ class Scene3 extends Phaser.Scene{
     }
     
     create() {   
+        //Each play scene is a copy of the previous scene with some alterations to the code.
         //Thief sprite
         this.anims.create({
             key: 'leftstill',
@@ -108,13 +109,10 @@ class Scene3 extends Phaser.Scene{
         
         this.spawnx = p1Spawn.x;
         this.spawnY = p1Spawn.y;
-
-        this.initCount = mapCount;
-        mapCount = this.initCount;
-        //Debug to show different values
         
+        initCount3 = initCount2
         
-        score = mapCount;
+        score = initCount3;
         
         //scoreText = this.add.text(85, 10, '', { font: '16px Courier', fill: '#FEFEFE' });
         this.data.set('score', ' ' + 0 );
@@ -197,10 +195,12 @@ class Scene3 extends Phaser.Scene{
 
         // define cursors and S key (for Scene switching)
         cursors = this.input.keyboard.createCursorKeys();
+
         let swap = this.input.keyboard.addKey('S');
         swap.on('down', () => {
             this.scene.start("gameOverScene");
         });
+
 
 
         
@@ -359,6 +359,7 @@ class Scene3 extends Phaser.Scene{
     //This starts the scene to the very beginning.
     resetPlayer(){
         this.sound.stopByKey('Footsteps');
+        score = initCount2;
         this.scene.start('scene3');
     }
     exitScene(){

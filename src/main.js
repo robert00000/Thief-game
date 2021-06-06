@@ -55,4 +55,4 @@ let deathText = 0;
 // this is to detect the time elapsed
 let startTime = new Date();
 let endTime = new Date();
-
+let initCount = 0, initCount2 = 0, initCount3 = 0;

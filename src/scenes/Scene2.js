@@ -15,6 +15,7 @@ class Scene2 extends Phaser.Scene{
     }
     
     create() {   
+        //Each play scene is a copy of the previous scene with some alterations to the code.
         //Thief sprite
         this.anims.create({
             key: 'leftstill',
@@ -114,12 +115,10 @@ class Scene2 extends Phaser.Scene{
         this.spawnx = p1Spawn.x;
         this.spawnY = p1Spawn.y;
 
-        this.initCount = mapCount;
-        mapCount = this.initCount;
-        //Debug to show different values
-        
-        
-        score = mapCount;
+        initCount = mapCount;
+        mapCount = initCount;
+
+        score = initCount;
         
         //scoreText = this.add.text(85, 10, '', { font: '16px Courier', fill: '#FEFEFE' });
         this.data.set('score', ' ' + 0 );
@@ -204,10 +203,12 @@ class Scene2 extends Phaser.Scene{
 
         // define cursors and S key (for Scene switching)
         cursors = this.input.keyboard.createCursorKeys();
+
         let swap = this.input.keyboard.addKey('S');
         swap.on('down', () => {
             this.scene.start("gameOverScene");
         });
+
 
 
         
@@ -308,8 +309,8 @@ class Scene2 extends Phaser.Scene{
         }
         if(this.physics.collide(player, this.exit)){
             this.sound.play('pickup');
-
-            this.exit.body.destroy();
+            initCount2 = score;
+            //this.exit.body.destroy();
 
             this.exitScene();
 
@@ -369,7 +370,7 @@ class Scene2 extends Phaser.Scene{
         //Might end up adding an extra point for some reason. Might be because of lag in the collision system.
         
         score += 1;
-        
+        initCount = score
         if (cam.deadzone){
             scoreText.setText('X ' + score);
         }
@@ -385,11 +386,12 @@ class Scene2 extends Phaser.Scene{
     //This starts the scene to the very beginning.
     resetPlayer(){
         this.sound.stopByKey('Footsteps');
+        mapCount = initCount;
         this.scene.start('scene2');  
     }
 
     exitScene() {
         this.sound.stopByKey('Footsteps');
-        rhis.scene.start('scene3');
+        this.scene.start('scene3');
     }
 }
