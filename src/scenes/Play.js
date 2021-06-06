@@ -220,7 +220,7 @@ class Play extends Phaser.Scene{
         this.footsteps = this.sound.add('Footsteps');
         footstepConfig = {
             mute: false,
-            volume: .7,
+            volume: .3,
             rate: 1,
             detune: 0,
             seek: 0,
@@ -314,8 +314,7 @@ class Play extends Phaser.Scene{
         if(player.body.blocked.down && this.footsteps.mute)
         {
             this.footsteps.mute = false;
-        }
-        
+        } 
 
         if(cursors.right.isDown || cursors.left.isDown){
             if(this.footsteps.mute && player.body.blocked.down){

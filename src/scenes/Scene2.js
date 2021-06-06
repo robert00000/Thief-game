@@ -317,13 +317,19 @@ class Scene2 extends Phaser.Scene{
         if(this.physics.collide(player, this.hidden)){
             this.hiddenLayer.alpha = 0;
         }
-        if (cursors.up.isDown && player.body.blocked.down ){
+        if (cursors.up.isDown && player.body.blocked.down){
             jump.play(jumpConfig);
+            this.footsteps.mute = true;
+        }
+
+        if(player.body.blocked.down && this.footsteps.mute)
+        {
+            this.footsteps.mute = false;
         }
         
 
         if(cursors.right.isDown || cursors.left.isDown){
-            if(this.footsteps.mute){
+            if(this.footsteps.mute && player.body.blocked.down){
                 this.footsteps.play(footstepConfig);
                 this.footsteps.mute = false;
             }
