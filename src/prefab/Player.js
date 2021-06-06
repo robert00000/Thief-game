@@ -14,9 +14,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
     preload(){
         this.load.audio('Footsteps', './assets/footsteps4.wav');
+        this.load.audio('Jump', './assets/Jump.mp3');
     }
     update(){
-        
+        //Allows for player to go left or right and plays the animations for each direction.
         if (cursors.left.isDown)
         {
             //this.sound.play('Footsteps');
@@ -43,6 +44,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 player.anims.play('leftstill');
             }
         }
+        //Allows for double jump.
         const didPressJump = Phaser.Input.Keyboard.JustDown(cursors.up);
         if (didPressJump) {
             if (player.body.onFloor()) {
