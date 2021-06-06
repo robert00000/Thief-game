@@ -204,7 +204,7 @@ class Scene2 extends Phaser.Scene{
 
         // define cursors and S key (for Scene switching)
         cursors = this.input.keyboard.createCursorKeys();
-        swap = this.input.keyboard.addKey('S');
+        let swap = this.input.keyboard.addKey('S');
         swap.on('down', () => {
             this.scene.start("gameOverScene");
         });
