@@ -373,6 +373,7 @@ class Play extends Phaser.Scene{
         this.scene.start('playScene');
     }
     exitScene(){
+        initCount = mapCount;
         this.sound.stopByKey('Footsteps');
         this.scene.start('scene2');
     }

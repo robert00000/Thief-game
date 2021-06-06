@@ -115,8 +115,8 @@ class Scene2 extends Phaser.Scene{
         this.spawnx = p1Spawn.x;
         this.spawnY = p1Spawn.y;
 
-        initCount = mapCount;
         mapCount = initCount;
+        
 
         score = initCount;
         
@@ -370,7 +370,7 @@ class Scene2 extends Phaser.Scene{
         //Might end up adding an extra point for some reason. Might be because of lag in the collision system.
         
         score += 1;
-        initCount = score
+        mapCount += 1;
         if (cam.deadzone){
             scoreText.setText('X ' + score);
         }
@@ -386,7 +386,6 @@ class Scene2 extends Phaser.Scene{
     //This starts the scene to the very beginning.
     resetPlayer(){
         this.sound.stopByKey('Footsteps');
-        mapCount = initCount;
         this.scene.start('scene2');  
     }
 

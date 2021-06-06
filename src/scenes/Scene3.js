@@ -110,9 +110,9 @@ class Scene3 extends Phaser.Scene{
         this.spawnx = p1Spawn.x;
         this.spawnY = p1Spawn.y;
         
-        initCount3 = initCount2
+        mapCount = initCount2;
         
-        score = initCount3;
+        score = initCount2;
         
         //scoreText = this.add.text(85, 10, '', { font: '16px Courier', fill: '#FEFEFE' });
         this.data.set('score', ' ' + 0 );
@@ -297,6 +297,7 @@ class Scene3 extends Phaser.Scene{
         }
         if(this.physics.collide(player, this.exit)){
             this.sound.play('pickup');
+            
             this.exitScene();
         }
         if (cursors.up.isDown && player.body.blocked.down){
@@ -350,7 +351,7 @@ class Scene3 extends Phaser.Scene{
         //Might end up adding an extra point for some reason. Might be because of lag in the collision system.
         
         score += 1;
-        
+        mapCount += 1;
         if (cam.deadzone){
             scoreText.setText('X ' + score);
         }
