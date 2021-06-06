@@ -55,27 +55,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
               this.canDoubleJump = false;
               player.body.setVelocityY(-250);
             }
-            
-            
-
-            
-            
-            
-            // else{
-            //     player.setVelocityY(-350)
-            // }
-                
-            
-            //player.setAccelerationY(-5);
-            // player.setMaxVelocity.y = -330;
-            // player.setVelocityY(-330);
-            //Doesn't quite work yet
-            // if(cursors.up.duration < 1000){
-            //     player.setVelocityY(-300)
-            // }
-            // else if(cursors.up.duration >= 2000){
-            //     player.setVelocityY(-330);
-            // }
 
             if (forward) {
                 player.anims.play('jumpright');

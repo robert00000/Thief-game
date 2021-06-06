@@ -145,10 +145,10 @@ class Play extends Phaser.Scene{
         deathText = this.add.text(300, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         deathText.setText('Deaths ' + dCounter);
         this.tutorialText = this.add.text(120, 100, '', { font: '8px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(10).setColor('#ffffff');
-        this.tutorialText.setText("Left and Right Keys to move, Up key to jump. \nPress Up again to double jump.");
+        this.tutorialText.setText("Left and Right Keys to move, Up key to jump. \nPress Up again to double jump.\nTry to collect all gems!");
         let tw = this.tweens.add({
             targets: this.tutorialText,
-            duration: 7000,
+            duration: 10000,
             alpha: 0,
             
             ease: 'Linear',
@@ -362,9 +362,9 @@ class Play extends Phaser.Scene{
         
     }
     exitScene(){
-        this.footsteps.mute = true;
+        
         this.scene.start('scene2');
-        this.footsteps.mute = true;
+        
     }
     
 }

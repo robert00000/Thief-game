@@ -107,6 +107,7 @@ class Scene2 extends Phaser.Scene{
 
         const itemSpawn = map.createFromObjects('Objects', {gid: 31, key:'Gem'});
         
+        const exitSpawn = map.createFromObjects('Secret', {gid: 39, key: 'Gem'});
         //const playerExit = map.findObject('Transition', obj => obj.name === 'exit');
         
         
@@ -186,14 +187,16 @@ class Scene2 extends Phaser.Scene{
         
         // Objects for this scene
         this.emeralds = this.physics.add.group({
-            allowGravity: false, 
+            allowGravity: false 
         });
 
-        
+        this.exit = this.physics.add.group({
+            allowGravity: false
+        });
 
         //Adds all the id's
         this.emeralds.addMultiple(itemSpawn);
-        
+        this.exit.addMultiple(exitSpawn);
         
         this.emeralds.children.iterate((child) =>{
             child.setScale(.5,.5);
@@ -234,7 +237,7 @@ class Scene2 extends Phaser.Scene{
         
         this.physics.add.collider(this.emeralds, terrainLayer);
         this.physics.add.collider(player, hiddenLayer);
-        
+        this.physics.add.collider(player, this.exit, this.exitScene, null, this);
         //this.physics.add.collider(player, hazardLayer);
         //Next layer will be for the hazards.
 
@@ -306,6 +309,7 @@ class Scene2 extends Phaser.Scene{
         }
         if(this.physics.collide(player, this.exit)){
             this.sound.play('pickup');
+            this.exit.body.destroy();
             this.scene.start('scene3');
         }
         if(this.physics.collide(player, this.hidden)){
@@ -362,6 +366,13 @@ class Scene2 extends Phaser.Scene{
             scoreText.setText('X ' + score);
         }
         
+    }
+    exitScene(player, exit){
+        this.sound.play('pickup');
+        
+        exit.anims.play('Collect');
+        exit.body.destroy();
+        this.scene.start('scene3')
     }
     //This starts the scene to the very beginning.
     resetPlayer(){
