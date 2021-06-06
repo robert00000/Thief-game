@@ -195,10 +195,12 @@ class Scene3 extends Phaser.Scene{
 
         // define cursors and S key (for Scene switching)
         cursors = this.input.keyboard.createCursorKeys();
-        // swap = this.input.keyboard.addKey('S');
-        // swap.on('down', () => {
-        //     this.scene.start("gameOverScene");
-        // });
+
+        let swap = this.input.keyboard.addKey('S');
+        swap.on('down', () => {
+            this.scene.start("gameOverScene");
+        });
+
 
 
         
@@ -297,13 +299,19 @@ class Scene3 extends Phaser.Scene{
             this.sound.play('pickup');
             this.exitScene();
         }
-        if (cursors.up.isDown && player.body.blocked.down ){
+        if (cursors.up.isDown && player.body.blocked.down){
             jump.play(jumpConfig);
+            this.footsteps.mute = true;
+        }
+
+        if(player.body.blocked.down && this.footsteps.mute)
+        {
+            this.footsteps.mute = false;
         }
         
 
         if(cursors.right.isDown || cursors.left.isDown){
-            if(this.footsteps.mute){
+            if(this.footsteps.mute && player.body.blocked.down){
                 this.footsteps.play(footstepConfig);
                 this.footsteps.mute = false;
             }
@@ -311,7 +319,6 @@ class Scene3 extends Phaser.Scene{
         else{
             this.footsteps.mute = true;
         }
-        
         
         // if (movingPlatform.x >= 500)
         // {

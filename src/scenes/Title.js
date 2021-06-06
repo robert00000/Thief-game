@@ -8,16 +8,18 @@ class Title extends Phaser.Scene {
         
         this.load.audio('select', './assets/Select.wav');
         this.load.audio('Footsteps', './assets/footsteps5.wav');
-        this.load.audio('Jump', './assets/Jump.mp3');
+        this.load.audio('Jump', './assets/Jump.wav');
         this.load.audio('collision', './assets/collision.wav');
         this.load.audio('pickup', './assets/pickup.wav');
 
         
         this.load.image('Gem', './assets/Gem1.png');
+        this.load.image('title', './assets/Title_1.png');
 
     }
     create() {
         //this.background = this.add.tileSprite(0, 0, 640, 960, 'background').setOrigin(0, 0);
+        this.add.image(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'title');
         //music configuration.
         var musicConfig = {
             mute: false,
@@ -66,8 +68,8 @@ class Title extends Phaser.Scene {
 
         }
         //this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
-        var text1 = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Welcome to The Swindler.', menuConfig).setOrigin(0.5);
-        text1.setTint(0xff0000);
+        // var text1 = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Welcome to The Swindler.', menuConfig).setOrigin(0.5);
+        //text1.setTint(0xff0000);
         //text2 = this.add.text(game.config.width/2, game.config.height/2, 'Use UP & DOWN arrows keys to move & (F) to fire', textConfig).setOrigin(0.5);
       
       

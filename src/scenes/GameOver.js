@@ -97,13 +97,13 @@ class GameOver extends Phaser.Scene {
         }
 
 
-        this.tweens.add({
-            targets: endDate,
-            y: 200,
-            x: 300,
-            duration: 500,
-            ease: 'Power2',
+        // this.tweens.add({
+        //     targets: endDate,
+        //     y: 200,
+        //     x: 300,
+        //     duration: 500,
+        //     ease: 'Power2',
             
-        });
+        // });
     }
 }
