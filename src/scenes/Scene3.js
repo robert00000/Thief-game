@@ -1,12 +1,12 @@
-class Scene2 extends Phaser.Scene{
+class Scene3 extends Phaser.Scene{
     constructor(){
-        super("scene2");
+        super("scene3");
     }
     preload(){
         
         this.load.image('microtileset', './assets/tileset1.png');
         this.load.image('2xtileset', './assets/tileset2@2x.png');
-        this.load.tilemapTiledJSON('tilemapJSON2', './assets/Tilemaps/Map2.json');
+        this.load.tilemapTiledJSON('tilemapJSON3', './assets/Tilemaps/Map3.json');
         this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
         this.load.atlas('collect', 'assets/Collect.png', 'assets/Collect.json');
         this.load.image('LStill', './assets/LStill.png');
@@ -71,7 +71,7 @@ class Scene2 extends Phaser.Scene{
         }
 
         //This is where we read files for this scenes map.
-        const map = this.add.tilemap('tilemapJSON2');
+        const map = this.add.tilemap('tilemapJSON3');
         const tileset = map.addTilesetImage('tileset1', 'microtileset');
         const tileset2x = map.addTilesetImage('tileset2', '2xtileset');
         //Background layer for the map.
@@ -84,7 +84,7 @@ class Scene2 extends Phaser.Scene{
         
         const transitionLayer = map.createLayer('Transition', tileset, 0, 0);
 
-        //const hiddenLayer = map.createLayer('Hidden wall1', tileset, 0, 0);
+        // const hiddenLayer = map.createLayer('Hidden wall1', tileset, 0, 0);
         terrainLayer.setCollisionByProperty({
             collides: true
         });
@@ -93,13 +93,10 @@ class Scene2 extends Phaser.Scene{
         });
         transitionLayer.setCollisionByProperty({
             collides: true
-        });
-        // hiddenLayer.setCollisionByProperty({
-        //     collides: true
-        // });
+        })
+        
         this.hazard = hazardLayer;
         this.exit = transitionLayer;
-        this.hidden = hiddenLayer;
         //this.exit = this.physics.add(600, 600, 'Gem');
         
         const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
@@ -232,7 +229,7 @@ class Scene2 extends Phaser.Scene{
         this.physics.add.collider(platforms, terrainLayer);
         
         this.physics.add.collider(this.emeralds, terrainLayer);
-        this.physics.add.collider(player, hiddenLayer);
+
         
         //this.physics.add.collider(player, hazardLayer);
         //Next layer will be for the hazards.
@@ -265,16 +262,12 @@ class Scene2 extends Phaser.Scene{
         else{
             if (forward) {
                 if(!player.body.blocked.down){
-                    player.anims.stop('right');
-                    player.anims.stop('left');
                     player.anims.play('jumpright');
                 }else{
                     player.anims.play('rightstill');
                 }
             }else{
                 if(!player.body.blocked.down){
-                    player.anims.stop('right');
-                    player.anims.stop('left');
                     player.anims.play('jumpleft');
                 }else{
                     player.anims.play('leftstill');
@@ -305,10 +298,7 @@ class Scene2 extends Phaser.Scene{
         }
         if(this.physics.collide(player, this.exit)){
             this.sound.play('pickup');
-            this.scene.start('scene3');
-        }
-        if(this.physics.collide(player, this.hidden)){
-            this.hiddenLayer.alpha = 0;
+            this.scene.start('scene2');
         }
         if (cursors.up.isDown && player.body.blocked.down ){
             jump.play(jumpConfig);
@@ -364,6 +354,11 @@ class Scene2 extends Phaser.Scene{
     }
     //This starts the scene to the very beginning.
     resetPlayer(){
-        this.scene.start('scene2');  
+        this.scene.start('scene3');
+        
     }
+    exitScene(){
+        this.scene.start('scene3');
+    }
+    
 }
