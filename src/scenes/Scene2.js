@@ -292,7 +292,6 @@ class Scene2 extends Phaser.Scene{
         if(this.physics.collide(player, this.hazard)){
             this.sound.play('collision');
             this.resetPlayer();
-            this.footsteps.mute = true;
             dCounter += 1;
             if (cam.deadzone){
                 deathText.setText('Deaths: ' + dCounter);
@@ -309,8 +308,11 @@ class Scene2 extends Phaser.Scene{
         }
         if(this.physics.collide(player, this.exit)){
             this.sound.play('pickup');
+
             this.exit.body.destroy();
-            this.scene.start('scene3');
+
+            this.exitScene();
+
         }
         if(this.physics.collide(player, this.hidden)){
             this.hiddenLayer.alpha = 0;
@@ -376,6 +378,12 @@ class Scene2 extends Phaser.Scene{
     }
     //This starts the scene to the very beginning.
     resetPlayer(){
+        this.sound.stopByKey('Footsteps');
         this.scene.start('scene2');  
+    }
+
+    exitScene() {
+        this.sound.stopByKey('Footsteps');
+        rhis.scene.start('scene3');
     }
 }

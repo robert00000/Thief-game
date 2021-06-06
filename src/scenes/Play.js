@@ -44,11 +44,15 @@ class Play extends Phaser.Scene{
         this.anims.create({
             key: 'jumpleft',
             frames: this.anims.generateFrameNames('thief', { prefix: 'JL', end: 5 }),
+            showOnStart: true,
+            framerate: 2
         });
 
         this.anims.create({
             key: 'jumpright',
             frames: this.anims.generateFrameNames('thief', { prefix: 'JR', end: 5 }),
+            showOnStart: true,
+            framerate: 2
         });
 
         //Collection anim
@@ -216,7 +220,7 @@ class Play extends Phaser.Scene{
         this.footsteps = this.sound.add('Footsteps');
         footstepConfig = {
             mute: false,
-            volume: .3,
+            volume: .2,
             rate: 1,
             detune: 0,
             seek: 0,
@@ -290,7 +294,6 @@ class Play extends Phaser.Scene{
         if(this.physics.collide(player, this.hazard)){
             this.sound.play('collision');
             this.resetPlayer();
-            this.footsteps.mute = true;
             dCounter += 1;
             if (cam.deadzone){
                 deathText.setText('Deaths: ' + dCounter);
@@ -301,7 +304,7 @@ class Play extends Phaser.Scene{
         }
         if(this.physics.collide(player, this.exit)){
             this.sound.play('pickup');
-            this.scene.start('scene2');
+            this.exitScene();
         }
         if (cursors.up.isDown && player.body.blocked.down ){
             jump.play(jumpConfig);
@@ -358,13 +361,12 @@ class Play extends Phaser.Scene{
     
     //This starts the scene to the very beginning.
     resetPlayer(){
+        this.sound.stopByKey('Footsteps');
         this.scene.start('playScene');
-        
     }
     exitScene(){
-        
+        this.sound.stopByKey('Footsteps');
         this.scene.start('scene2');
-        
     }
     
 }
