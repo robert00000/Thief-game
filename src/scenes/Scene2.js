@@ -84,6 +84,7 @@ class Scene2 extends Phaser.Scene{
         
         const transitionLayer = map.createLayer('Transition', tileset, 0, 0);
 
+        const hiddenLayer = map.createLayer('Hidden wall1', tileset, 0, 0);
         //const hiddenLayer = map.createLayer('Hidden wall1', tileset, 0, 0);
         terrainLayer.setCollisionByProperty({
             collides: true
