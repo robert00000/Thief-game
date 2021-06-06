@@ -365,7 +365,7 @@ class Scene3 extends Phaser.Scene{
     }
     exitScene(){
         this.sound.stopByKey('Footsteps');
-        this.scene.start('scene3');
+        this.scene.start('endScene');
     }
     
 }

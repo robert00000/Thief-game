@@ -38,8 +38,8 @@ class Credits extends Phaser.Scene {
         time = time.toFixed(2);
         
         this.text1 = this.add.text(game.config.width/2, -100, 'Collaborators: Robert williams, Aaron Tishler, Carey Wang\nProgrammer: Robert Williams\nArt Assets: Aaron Tishler\nSound Design: Carey Wang ', textConfig).setOrigin(0.5);
-        this.text4 = this.add.text(game.config.width/2, 700, 'Resources used: Phaser 3, Rocket Patrol, Paint 3d, Visual Studio, Github, Beat fixer, Adobe illustrator\nAbleton and Adobe illustrator.', textConfig).setOrigin(0.5);
-        this.text2 = this.add.text(game.config.width/2 , -100, 'Press R to start the game.', textConfig).setOrigin(0.5)
+        this.text4 = this.add.text(game.config.width/2, 700, 'Resources used: Phaser 3, Rocket Patrol, Paint 3d, Visual Studio, Github, Beat fixer, Adobe illustrator\nAbleton, Online Sequencer and Tiled.', textConfig).setOrigin(0.5);
+        this.text2 = this.add.text(game.config.width/2 , -100, 'Press R to return to title scene.', textConfig).setOrigin(0.5)
 
         this.tweens.add({
              targets: this.text2,
@@ -88,7 +88,7 @@ class Credits extends Phaser.Scene {
             }
             
             // start next scene
-            this.scene.start('playScene');
+            this.scene.start('titleScene');
         }
         
 

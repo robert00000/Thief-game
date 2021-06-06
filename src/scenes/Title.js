@@ -5,6 +5,9 @@ class Title extends Phaser.Scene {
     preload(){
         //images and sounds go here.
         
+        this.load.image('microtileset', './assets/tileset1.png');
+        this.load.image('2xtileset', './assets/tileset2@2x.png');
+
         
         this.load.audio('select', './assets/Select.wav');
         this.load.audio('Footsteps', './assets/footsteps5.wav');
@@ -12,14 +15,22 @@ class Title extends Phaser.Scene {
         this.load.audio('collision', './assets/collision.wav');
         this.load.audio('pickup', './assets/pickup.wav');
 
-        
+        this.load.tilemapTiledJSON('titleMap', './assets/Tilemaps/Title.json');
         this.load.image('Gem', './assets/Gem1.png');
         this.load.image('title', './assets/Title_1.png');
 
     }
     create() {
+        
         //this.background = this.add.tileSprite(0, 0, 640, 960, 'background').setOrigin(0, 0);
+        
+        const map = this.add.tilemap('titleMap');
+        const tileset = map.addTilesetImage('tileset1', 'microtileset');
+
+
+        const bgLayer = map.createLayer('BG', tileset, 0, 0);
         this.add.image(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'title');
+        
         //music configuration.
         var musicConfig = {
             mute: false,

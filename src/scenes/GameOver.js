@@ -1,6 +1,6 @@
 class GameOver extends Phaser.Scene {
     constructor() {
-        super('gameOverScene');
+        super('endScene');
     }
 
     create() {
@@ -8,7 +8,7 @@ class GameOver extends Phaser.Scene {
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Arial',
-            fontSize: '28px',
+            fontSize: '14px',
             color: '#FEFEFE',
             align: 'right',
             padding: {
@@ -21,7 +21,7 @@ class GameOver extends Phaser.Scene {
             fontFamily: 'Arial',
             fontSize: '14px',
             color: '#FEFEFE',
-            align: 'right',
+            align: 'left',
             padding: {
                 top: 5,
                 bottom: 5,
@@ -30,26 +30,23 @@ class GameOver extends Phaser.Scene {
         }
         
 
-        if(time > highScore){
-            highScore = time;
-            highScore = highScore.toFixed(2);
-        }
+        // if(time > highScore){
+        //     highScore = time;
+        //     highScore = highScore.toFixed(2);
+        // }
 
         time = time.toFixed(2);
         
-        this.text1 = this.add.text(game.config.width/2, -100 - borderUISize - borderPadding, 'Game Over!', menuConfig).setOrigin(0.5);
-        this.text2 = this.add.text(game.config.width/2, -100, 'Press R to restart. Press E for credits.', textConfig).setOrigin(0.5);
-        this.text3 = this.add.text(game.config.width/2, 700, 'Your time is ' + parseFloat(time), textConfig).setOrigin(0.5);
-        this.text4 = this.add.text(game.config.width/2, 700, 'Your highest time is ' + parseFloat(highScore), textConfig).setOrigin(0.5);
+        this.text1 = this.add.text(game.config.width/2, -100 - borderUISize - borderPadding, 'You have beaten the game!\n Score:' + score + 'Deaths:' + dCounter + ' \nPress R to go back to title and E to see credits.', menuConfig).setOrigin(0.5);
         
 
-        this.tweens.add({
-            targets: this.text2,
-            y: 250,
-            duration: 500,
-            ease: 'Power2',
+        // this.tweens.add({
+        //     targets: this.text2,
+        //     y: 250,
+        //     duration: 500,
+        //     ease: 'Power2',
             
-        });
+        // });
         this.tweens.add({
             targets: this.text1,
             y: 200,
@@ -57,22 +54,22 @@ class GameOver extends Phaser.Scene {
             ease: 'Power2',
             
         });
-        this.tweens.add({
-            targets: this.text3,
-            y: 300,
-            //duration: 500,
-            delay: 500,
-            ease: 'Power2',
+        // this.tweens.add({
+        //     targets: this.text3,
+        //     y: 300,
+        //     //duration: 500,
+        //     delay: 500,
+        //     ease: 'Power2',
             
-        });
-        this.tweens.add({
-            targets: this.text4,
-            y: 350,
-            //duration: 500,
-            delay: 2000,
-            ease: 'Power2',
+        // });
+        // this.tweens.add({
+        //     targets: this.text4,
+        //     y: 350,
+        //     //duration: 500,
+        //     delay: 2000,
+        //     ease: 'Power2',
             
-        });
+        // });
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         
@@ -89,7 +86,7 @@ class GameOver extends Phaser.Scene {
                 gameTimer: 1000
             }
             // start next scene
-            this.scene.start('playScene');
+            this.scene.start('titleScene');
         }
         if(this.keyE.isDown){
             this.sound.play('select');
