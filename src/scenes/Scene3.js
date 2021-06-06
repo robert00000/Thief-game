@@ -1,13 +1,12 @@
-class Play extends Phaser.Scene{
+class Scene3 extends Phaser.Scene{
     constructor(){
-        super("playScene");
+        super("scene3");
     }
     preload(){
         
-        //this.load.spritesheet('Player', './assets/character.png', {frameWidth: 50, frameHeight: 81, startFrame: 0, endFrame: 14});
         this.load.image('microtileset', './assets/tileset1.png');
         this.load.image('2xtileset', './assets/tileset2@2x.png');
-        this.load.tilemapTiledJSON('tilemapJSON', './assets/Tilemaps/Map1.json');
+        this.load.tilemapTiledJSON('tilemapJSON3', './assets/Tilemaps/Map3.json');
         this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
         this.load.atlas('collect', 'assets/Collect.png', 'assets/Collect.json');
         this.load.image('LStill', './assets/LStill.png');
@@ -44,15 +43,11 @@ class Play extends Phaser.Scene{
         this.anims.create({
             key: 'jumpleft',
             frames: this.anims.generateFrameNames('thief', { prefix: 'JL', end: 5 }),
-            showOnStart: true,
-            framerate: 2
         });
 
         this.anims.create({
             key: 'jumpright',
             frames: this.anims.generateFrameNames('thief', { prefix: 'JR', end: 5 }),
-            showOnStart: true,
-            framerate: 2
         });
 
         //Collection anim
@@ -74,11 +69,9 @@ class Play extends Phaser.Scene{
         },
         fixedWidth: 100
         }
-        
-        
 
         //This is where we read files for this scenes map.
-        const map = this.add.tilemap('tilemapJSON');
+        const map = this.add.tilemap('tilemapJSON3');
         const tileset = map.addTilesetImage('tileset1', 'microtileset');
         const tileset2x = map.addTilesetImage('tileset2', '2xtileset');
         //Background layer for the map.
@@ -90,6 +83,8 @@ class Play extends Phaser.Scene{
         const terrainLayer = map.createLayer('Terrain', tileset, 0, 0);
         
         const transitionLayer = map.createLayer('Transition', tileset, 0, 0);
+
+        // const hiddenLayer = map.createLayer('Hidden wall1', tileset, 0, 0);
         terrainLayer.setCollisionByProperty({
             collides: true
         });
@@ -102,21 +97,24 @@ class Play extends Phaser.Scene{
         
         this.hazard = hazardLayer;
         this.exit = transitionLayer;
-        this.exit.alpha = 0;
-        mapCount = 0;
+        //this.exit = this.physics.add(600, 600, 'Gem');
         
         const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
 
         const itemSpawn = map.createFromObjects('Objects', {gid: 31, key:'Gem'});
         
+        //const playerExit = map.findObject('Transition', obj => obj.name === 'exit');
+        
+        
         this.spawnx = p1Spawn.x;
         this.spawnY = p1Spawn.y;
 
-
+        this.initCount = mapCount;
+        mapCount = this.initCount;
         //Debug to show different values
         
         
-        score = 0;
+        score = mapCount;
         
         //scoreText = this.add.text(85, 10, '', { font: '16px Courier', fill: '#FEFEFE' });
         this.data.set('score', ' ' + 0 );
@@ -142,23 +140,13 @@ class Play extends Phaser.Scene{
         //this.cameras.main.setSize(640, 480);
         //this.cameras.main.setBounds(0,0,map.widthInPixels,map.heightInPixels);
         this.cameras.main.setDeadzone(50, 50);
-        this.cameras.main.zoom = 1.25;
+        this.cameras.main.zoom = 1.15;
 
         scoreText = this.add.text(220, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         scoreText.setText('X ' + score);
         deathText = this.add.text(300, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         deathText.setText('Deaths ' + dCounter);
-        this.tutorialText = this.add.text(120, 100, '', { font: '8px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(10).setColor('#ffffff');
-        this.tutorialText.setText("Left and Right Keys to move, Up key to jump. \nPress Up again to double jump.\nTry to collect all gems!");
-        let tw = this.tweens.add({
-            targets: this.tutorialText,
-            duration: 10000,
-            alpha: 0,
-            
-            ease: 'Linear',
-          });
         const gem = this.add.image(200, 65, 'Gem').setScale(.5,.5).setScrollFactor(0);
-        
         //const cam2 = this.cameras.add(400, 0, 400, 300);
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         
@@ -191,8 +179,7 @@ class Play extends Phaser.Scene{
         
 
         // info text
-        //this.message = this.add.text(centerX, 32, 'Awaiting physics world events...').setOrigin(0.5);
-        //this.add.text(centerX, game.config.height - 64, 'Use cursor keys to move up and down.').setOrigin(0.5);
+        
         // Objects for this scene
         this.emeralds = this.physics.add.group({
             allowGravity: false, 
@@ -220,7 +207,7 @@ class Play extends Phaser.Scene{
         this.footsteps = this.sound.add('Footsteps');
         footstepConfig = {
             mute: false,
-            volume: .2,
+            volume: .3,
             rate: 1,
             detune: 0,
             seek: 0,
@@ -299,7 +286,13 @@ class Play extends Phaser.Scene{
                 deathText.setText('Deaths: ' + dCounter);
             }
 
-            
+            let tw = this.tweens.add({
+                targets: player,
+                alpha: 1,
+                duration: 100,
+                ease: 'Linear',
+                repeat: 5,
+              });
 
         }
         if(this.physics.collide(player, this.exit)){
@@ -350,23 +343,22 @@ class Play extends Phaser.Scene{
         gem.anims.play('Collect');
         gem.body.destroy();
         //Might end up adding an extra point for some reason. Might be because of lag in the collision system.
-            
+        
         score += 1;
-        mapCount += 1;
+        
         if (cam.deadzone){
             scoreText.setText('X ' + score);
         }
         
     }
-    
     //This starts the scene to the very beginning.
     resetPlayer(){
         this.sound.stopByKey('Footsteps');
-        this.scene.start('playScene');
+        this.scene.start('scene3');
     }
     exitScene(){
         this.sound.stopByKey('Footsteps');
-        this.scene.start('scene2');
+        this.scene.start('scene3');
     }
     
 }

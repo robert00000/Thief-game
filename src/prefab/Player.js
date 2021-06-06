@@ -1,3 +1,5 @@
+
+var canDoubleJump;
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, key, frame){
         // call Phaser Physics Sprite constructor
@@ -41,15 +43,38 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 player.anims.play('leftstill');
             }
         }
+        const didPressJump = Phaser.Input.Keyboard.JustDown(cursors.up);
+        if (didPressJump) {
+            if (player.body.onFloor()) {
+              // player can only double jump if it is on the floor
+              this.canDoubleJump = true;
+              player.body.setVelocityY(-250);
+            } 
+            else if (this.canDoubleJump) {
+              // player can only jump 2x (double jump)
+              this.canDoubleJump = false;
+              player.body.setVelocityY(-250);
+            }
 
-        if(cursors.up.isDown && player.body.blocked.down ){
-            
-            player.setVelocityY(-330);
             if (forward) {
                 player.anims.play('jumpright');
             }else{
                 player.anims.play('jumpleft');
             }
+            
         }
+        
+        
+
+    }
+    startJump(){
+        this.timer=this.time.addEvent({ delay: 100, callback: this.tick, callbackScope: this, loop: true});
+    }
+    endJump(){
+        this.timer.remove();
+        this.ball.setVelocityY(-this.power*50);
+    }
+    tick(){
+        this.power += 1;
     }
 }

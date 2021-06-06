@@ -12,10 +12,7 @@ class Title extends Phaser.Scene {
         this.load.audio('collision', './assets/collision.wav');
         this.load.audio('pickup', './assets/pickup.wav');
 
-        this.load.image ('background','./assets/BG.png');
-        this.load.image('Chest', './assets/Chest.png');
-        this.load.image('Barrier', './assets/Barrier.png');
-        this.load.image('Camera', './assets/Camera.png');
+        
         this.load.image('Gem', './assets/Gem1.png');
 
     }
@@ -69,7 +66,7 @@ class Title extends Phaser.Scene {
 
         }
         //this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
-        var text1 = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Welcome to Prototype platformer.', menuConfig).setOrigin(0.5);
+        var text1 = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Welcome to The Swindler.', menuConfig).setOrigin(0.5);
         text1.setTint(0xff0000);
         //text2 = this.add.text(game.config.width/2, game.config.height/2, 'Use UP & DOWN arrows keys to move & (F) to fire', textConfig).setOrigin(0.5);
       

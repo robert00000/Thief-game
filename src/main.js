@@ -1,6 +1,6 @@
 //Collaborators Robert Williams, Carey Wang and Aaron Tishler
-// Knight Runner      
-//Date completed: 5/3/21
+// The Swindler     
+//Date completed: 6/7/21
 
 "use strict";
 
@@ -21,7 +21,7 @@ let config = {
             }
         }
     },
-    scene: [ Title, Play, GameOver, Credits ,Scene2 ]   
+    scene: [ Title, Play, GameOver, Credits , Scene2, Scene3 ]   
     
 }
 
@@ -45,12 +45,13 @@ let newHighScore = false;
 let forward = true;
 let widthSpacer = game.config.width/5;
 let halfHeight = game.config.height/2;
-let swap = null;
 let cursors = null;
 let jump, jumpConfig;
 let music;
-
+let mapCount = 0;
 let time = 0;
+let dCounter = 0;
+let deathText = 0;
 // this is to detect the time elapsed
 let startTime = new Date();
 let endTime = new Date();
