@@ -1,7 +1,8 @@
 class Instructions extends Phaser.Scene {
     constructor() {
-        super('Instructions');
+        super('instructionScene');
     }
+
 
     create() {
         //this.background = this.add.tileSprite(0, 0, 640, 960, 'background').setOrigin(0, 0);
@@ -20,7 +21,7 @@ class Instructions extends Phaser.Scene {
         }
         let textConfig = {
             fontFamily: 'Arial',
-            fontSize: '14px',
+            fontSize: '18px',
             color: '#FEFEFE',
             align: 'left',
             padding: {
@@ -30,45 +31,12 @@ class Instructions extends Phaser.Scene {
             fixedWidth: 0
         }
         
-        this.text1 = this.add.text(game.config.width/2, -100, 'Instructions', menuConfig).setOrigin(0.5);
-        this.text2 = this.add.text(game.config.width/2, 700, 'Use Left and Right Arrow keys to Move, UP arrow key to jump.', textConfig).setOrigin(0.5);
-        this.text3 = this.add.text(game.config.width/2 -100, 'sdfsdfsdf', textConfig).setOrigin(0.5);
-      
-
-
-
-        this.tweens.add({
-            targets: this.text2,
-            y: 100,
-            duration: 500,
-            ease: 'Power2',
+        this.add.text(game.config.width/2, 70, 'Instructions', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, 200, ' You are playing as a thief who has just broken into a famous museum.\n Collect as many gems as you can while avoiding the hazardous obstacles.\n Use Left and Right arrow keys to move, Up arrow key to jump.\n Hitting an obstacle will send you back to the beginning.', textConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, 350, 'Press R to start the game.', textConfig).setOrigin(0.5);
            
-        });
-        this.tweens.add({
-            targets: this.text1,
-            y: 250,
-            duration: 500,
-            ease: 'Power2',
-           
-        });
-        this.tweens.add({
-            targets: this.text3,
-            y: 300,
-            //duration: 500,
-            delay: 500,
-            ease: 'Power2',
-           
-        });
-        this.tweens.add({
-            targets: this.text4,
-            y: 350,
-            //duration: 500,
-            delay: 2000,
-            ease: 'Power2',
-           
-        });
        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        // time = 0;
+       
     }
 
     update() {
@@ -84,16 +52,5 @@ class Instructions extends Phaser.Scene {
             // start next scene
             this.scene.start('playScene');
         }
-        
-
-
-        this.tweens.add({
-            targets: endDate,
-            y: 200,
-            x: 300,
-            duration: 500,
-            ease: 'Power2',
-            
-        });
     }
 }
