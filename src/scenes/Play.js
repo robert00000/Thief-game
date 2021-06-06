@@ -70,6 +70,8 @@ class Play extends Phaser.Scene{
         },
         fixedWidth: 100
         }
+        
+        
 
         //This is where we read files for this scenes map.
         const map = this.add.tilemap('tilemapJSON');
@@ -142,7 +144,15 @@ class Play extends Phaser.Scene{
         scoreText.setText('X ' + score);
         deathText = this.add.text(300, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         deathText.setText('Deaths ' + dCounter);
-
+        this.tutorialText = this.add.text(120, 100, '', { font: '8px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(10).setColor('#ffffff');
+        this.tutorialText.setText("Left and Right Keys to move, Up key to jump. \nPress Up again to double jump.");
+        let tw = this.tweens.add({
+            targets: this.tutorialText,
+            duration: 7000,
+            alpha: 0,
+            
+            ease: 'Linear',
+          });
         const gem = this.add.image(200, 65, 'Gem').setScale(.5,.5).setScrollFactor(0);
         
         //const cam2 = this.cameras.add(400, 0, 400, 300);
@@ -286,13 +296,7 @@ class Play extends Phaser.Scene{
                 deathText.setText('Deaths: ' + dCounter);
             }
 
-            let tw = this.tweens.add({
-                targets: player,
-                alpha: 1,
-                duration: 100,
-                ease: 'Linear',
-                repeat: 5,
-              });
+            
 
         }
         if(this.physics.collide(player, this.exit)){
