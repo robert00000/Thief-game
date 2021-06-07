@@ -1,10 +1,15 @@
 //Collaborators Robert Williams, Carey Wang and Aaron Tishler
 // The Swindler     
 //Date completed: 6/7/21
+//The ICING
 //Double jumps have been implemented as well as tiled inside of our project.
-//There are some "Secret" areas in the game that gives the player access to more loot.
+//Program uses tiled to get data for objects that have been placed and updates the score whenever the
+//player collides with these objects. Hazards are their own layer and it updates the death counter.
+//There are some "Secret" areas in the game that gives the player access to more loot which can help the player.
+//towards gaining different ending text.
 //There is a variety of different endings that depend upon the player's score as well as their deaths.
-//this ending text varies depending upon how much the player had collected or died if at all.
+//this ending text varies depending upon how much the player had collected or died if at all allowing for dynamic endings.
+//At the start of different scenes there is advice, instructions or story elements.
 "use strict";
 
 let config = {
