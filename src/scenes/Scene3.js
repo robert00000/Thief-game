@@ -242,7 +242,7 @@ class Scene3 extends Phaser.Scene{
         //Player updating
         if(!advice2){
             this.tutorialText = this.add.text(120, 100, '', { font: '8px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(10).setColor('#ffffff');
-            this.tutorialText.setText("When you have thought you've found it, On closer inspection you've realized that it's a replica.\nThe true star is in the vault of lasers and death!");
+            this.tutorialText.setText("You've found it! Or so you think. On closer inspection you've realized\nthat it's a replica.\nThe true star is in the vault of lasers and death!");
             let tw = this.tweens.add({
             targets: this.tutorialText,
             duration: 10000,
