@@ -21,7 +21,7 @@ let config = {
             }
         }
     },
-    scene: [ Title, Play, GameOver, Credits , Scene2, Scene3 ]   
+    scene: [ Title, Scene1, Ending, Credits , Scene2, Scene3 ]   
     
 }
 
@@ -52,6 +52,7 @@ let mapCount = 0;
 let time = 0;
 let dCounter = 0;
 let deathText = 0;
+let advice = false;
 // this is to detect the time elapsed
 let startTime = new Date();
 let endTime = new Date();

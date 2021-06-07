@@ -11,7 +11,7 @@ class Scene2 extends Phaser.Scene{
         this.load.atlas('collect', 'assets/Collect.png', 'assets/Collect.json');
         this.load.image('LStill', './assets/LStill.png');
         this.load.image('RStill', './assets/RStill.png');
-        
+        this.load.audio('transition', './assets/transition.wav');
     }
     
     create() {   
@@ -70,7 +70,7 @@ class Scene2 extends Phaser.Scene{
         },
         fixedWidth: 100
         }
-
+        
         //This is where we read files for this scenes map.
         const map = this.add.tilemap('tilemapJSON2');
         const tileset = map.addTilesetImage('tileset1', 'microtileset');
@@ -248,6 +248,22 @@ class Scene2 extends Phaser.Scene{
         
         //this.moveText();
         //Player updating
+        if(!advice){
+            this.tutorialText = this.add.text(120, 100, '', { font: '8px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(10).setColor('#ffffff');
+            this.tutorialText.setText("One thing to note do not fall on top of the transition object as\nit may cause the next scene to lag.\nApproach it horizontally.\n");
+            let tw = this.tweens.add({
+            targets: this.tutorialText,
+            duration: 10000,
+            alpha: 0,
+            
+            ease: 'Linear',
+          });
+          advice = true;
+        }
+        else{
+
+        }
+        
         player.update();
         if (cursors.left.isDown && player.body.blocked.down)
         {
@@ -367,7 +383,7 @@ class Scene2 extends Phaser.Scene{
         
     }
     exitScene(player, exit){
-        this.sound.play('transition');
+        
         
         exit.anims.play('Collect');
         exit.body.destroy();
@@ -383,4 +399,6 @@ class Scene2 extends Phaser.Scene{
         this.sound.stopByKey('Footsteps');
         this.scene.start('scene3');
     }
+    
+        
 }

@@ -4,14 +4,9 @@ class Scene3 extends Phaser.Scene{
     }
     preload(){
         
-        this.load.image('microtileset', './assets/tileset1.png');
-        this.load.image('2xtileset', './assets/tileset2@2x.png');
-        this.load.tilemapTiledJSON('tilemapJSON3', './assets/Tilemaps/Map3.json');
-        this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
-        this.load.atlas('collect', 'assets/Collect.png', 'assets/Collect.json');
-        this.load.image('LStill', './assets/LStill.png');
-        this.load.image('RStill', './assets/RStill.png');
         
+        this.load.tilemapTiledJSON('tilemapJSON3', './assets/Tilemaps/Map3.json');
+        this.load.audio('transition', './assets/transition.wav');
     }
     
     create() {   
@@ -299,7 +294,7 @@ class Scene3 extends Phaser.Scene{
             this.scene.start('titleScene');
         }
         if(this.physics.collide(player, this.exit)){
-            this.sound.play('pickup');
+            this.sound.play('transition');
             this.exitScene();
         }
 

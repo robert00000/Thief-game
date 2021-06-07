@@ -1,4 +1,4 @@
-class Play extends Phaser.Scene{
+class Scene1 extends Phaser.Scene{
     constructor(){
         super("playScene");
     }
@@ -16,6 +16,7 @@ class Play extends Phaser.Scene{
     }
     
     create() {   
+        //This is the starting scene in which it's the first scene.
         //Thief sprite
         this.anims.create({
             key: 'leftstill',

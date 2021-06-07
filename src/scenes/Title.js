@@ -41,7 +41,6 @@ class Title extends Phaser.Scene {
         //Looping background music.
         //this.music = this.sound.add('music');
         //this.music.play(musicConfig);
-
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Arial',
@@ -84,7 +83,7 @@ class Title extends Phaser.Scene {
       
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press the R key to start the game\nPress E to see credits.\nPress F for instructions.', textConfig).setOrigin(0.5);
         
-        this.text2 = this.add.text(game.config.width/2, 600 + borderUISize + borderPadding, 'Instructions: Move up by pressing the UP arrow key \nMove left and right using the LEFT RIGHT arrow keys.\nCollect the gems and progress to the next level.', textConfig).setOrigin(0.5);
+        this.text2 = this.add.text(game.config.width/2, 600 + borderUISize + borderPadding, ' You are playing as a thief who has just broken into a famous museum.\n Collect as many gems as you can while avoiding the hazardous obstacles.\nMove left and right using the LEFT RIGHT arrow keys.\nOptionally try to collect all the gems and progress to the next level.', textConfig).setOrigin(0.5);
 
 
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -123,12 +122,13 @@ class Title extends Phaser.Scene {
 
         }
         if(keyF.isDown){
+            
             this.tweens.add({
                 targets: this.text2,
-                y: 400,
+                y: 350,
                 duration: 500,
                 ease: 'Power2',
-               
+                
             });
             
         }
