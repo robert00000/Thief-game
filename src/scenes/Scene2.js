@@ -108,7 +108,7 @@ class Scene2 extends Phaser.Scene{
 
         const itemSpawn = map.createFromObjects('Objects', {gid: 31, key:'Gem'});
         
-        const exitSpawn = map.createFromObjects('Secret', {gid: 39, key: 'Gem'});
+        
         //const playerExit = map.findObject('Transition', obj => obj.name === 'exit');
         
         
@@ -189,13 +189,10 @@ class Scene2 extends Phaser.Scene{
             allowGravity: false 
         });
 
-        this.exit = this.physics.add.group({
-            allowGravity: false
-        });
+        
 
         //Adds all the id's
         this.emeralds.addMultiple(itemSpawn);
-        this.exit.addMultiple(exitSpawn);
         
         this.emeralds.children.iterate((child) =>{
             child.setScale(.5,.5);
@@ -226,12 +223,7 @@ class Scene2 extends Phaser.Scene{
         }
 
         
-        //Timer for the spawning of things.
-        var timer = this.time.addEvent({
-            delay: 500,                // ms
-            //args: [],
-            repeat: 4
-        });
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         //Adding collision 
         this.physics.add.collider(platforms, terrainLayer);
@@ -341,16 +333,13 @@ class Scene2 extends Phaser.Scene{
         }
         
         
-        // if (movingPlatform.x >= 500)
-        // {
-        //     movingPlatform.setVelocityX(-50);
-        // }
-        // else if (movingPlatform.x <= 300)
-        // {
-        //     movingPlatform.setVelocityX(50);
-        // }
-        
-
+        // wait for UP input to restart game
+        if (keyR.isDown) {
+            this.sound.play('select');
+            this.sound.stopByKey('bgm');
+            // start next scene
+            this.scene.start('titleScene');
+        }
 
 
     }

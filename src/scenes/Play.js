@@ -150,7 +150,7 @@ class Play extends Phaser.Scene{
         deathText = this.add.text(300, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         deathText.setText('Deaths ' + dCounter);
         this.tutorialText = this.add.text(120, 100, '', { font: '8px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(10).setColor('#ffffff');
-        this.tutorialText.setText("Left and Right Keys to move, Up key to jump. \nPress Up again to double jump.\nTry to collect all gems!");
+        this.tutorialText.setText("Left and Right Keys to move, Up key to jump and R to restart the game. \nPress Up again to double jump.\nTry to collect all gems!");
         let tw = this.tweens.add({
             targets: this.tutorialText,
             duration: 10000,
@@ -164,32 +164,13 @@ class Play extends Phaser.Scene{
         //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
         
         
-        // this.block2 = this.physics.add.sprite(600,600,'Gem').setOrigin(0.5);
-        // this.block2.body.onWorldBounds = true;
-        // this.block2.body.setImmovable = true;
-        // this.block2.body.onOverlap = true;
-        // this.block2.setCollideWorldBounds(true);
+        
+        
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
-        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         // some variables
         platforms = this.physics.add.staticGroup();
-
-        
-        // movingPlatform = this.physics.add.image(300, 300, 'Barrier');
-        // movingPlatform.body.setSize(100,100);
-        
-        // movingPlatform.setImmovable(true);
-        // movingPlatform.body.allowGravity = false;
-        // movingPlatform.setVelocityX(50);
-
-        // this.platform = this.physics.add.sprite(100, 200, 'Chest');
-        // this.platform.setImmovable(true);
-        // this.platform.body.setSize(50,50);
-        // this.platform.body.allowGravity = false;
-
-        
-        
-        
+       
 
         // info text
         //this.message = this.add.text(centerX, 32, 'Awaiting physics world events...').setOrigin(0.5);
@@ -247,8 +228,7 @@ class Play extends Phaser.Scene{
         this.physics.add.collider(this.emeralds, terrainLayer);
 
         
-        //this.physics.add.collider(player, hazardLayer);
-        //Next layer will be for the hazards.
+        
 
         //Camera following
         this.cameras.main.startFollow(player);
@@ -332,20 +312,15 @@ class Play extends Phaser.Scene{
         }
         
         
-        // if (movingPlatform.x >= 500)
-        // {
-        //     movingPlatform.setVelocityX(-50);
-        // }
-        // else if (movingPlatform.x <= 300)
-        // {
-        //     movingPlatform.setVelocityX(50);
-        // }
-        
-
-
+        // wait for UP input to restart game
+        if (keyR.isDown) {
+            this.sound.play('select');
+            this.sound.stopByKey('bgm');
+            // start next scene
+            this.scene.start('titleScene');
+        }
 
     }
-    //Could possibly be used to randomize sprites positions.
     
     getRandomInt(min, max) {
         min = Math.ceil(min);

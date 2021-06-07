@@ -220,14 +220,8 @@ class Scene3 extends Phaser.Scene{
 
         }
 
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         
-        //Timer for the spawning of things.
-        var timer = this.time.addEvent({
-            delay: 500,                // ms
-            //args: [],
-            repeat: 4
-        });
-
         //Adding collision 
         this.physics.add.collider(platforms, terrainLayer);
         this.physics.add.collider(player, hiddenLayer);
@@ -298,6 +292,12 @@ class Scene3 extends Phaser.Scene{
               });
 
         }
+        if (keyR.isDown) {
+            this.sound.play('select');
+            this.sound.stopByKey('bgm');
+            // start next scene
+            this.scene.start('titleScene');
+        }
         if(this.physics.collide(player, this.exit)){
             this.sound.play('pickup');
             this.exitScene();
@@ -341,13 +341,8 @@ class Scene3 extends Phaser.Scene{
 
 
     }
-    //Could possibly be used to randomize sprites positions.
     
-    getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-    }
+    
     //This disables the item that collides with the player to make it look as though it has been collected.
     collectGem (player, gem)
     {   

@@ -28,7 +28,7 @@ class Title extends Phaser.Scene {
 
         const bgLayer = map.createLayer('BG', tileset, 0, 0);
         this.add.image(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'title');
-        
+        this.map = map;
         //music configuration.
        musicConfig = {
             mute: false,
@@ -100,7 +100,6 @@ class Title extends Phaser.Scene {
     update() {
         //this.background.tilePositionX += 1;
         //Music looping
-        
 
 
         if (keyR.isDown) {
