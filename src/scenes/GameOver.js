@@ -10,7 +10,7 @@ class GameOver extends Phaser.Scene {
             fontFamily: 'Arial',
             fontSize: '14px',
             color: '#FEFEFE',
-            align: 'right',
+            align: 'left',
             padding: {
                 top: 5,
                 bottom: 5,
@@ -37,7 +37,7 @@ class GameOver extends Phaser.Scene {
 
         time = time.toFixed(2);
         
-        this.text1 = this.add.text(game.config.width/2, -100 - borderUISize - borderPadding, 'You have beaten the game!\n Score:' + score + 'Deaths:' + dCounter + ' \nPress R to go back to title and E to see credits.', menuConfig).setOrigin(0.5);
+        this.text1 = this.add.text(game.config.width/2, -100 - borderUISize - borderPadding, 'You have beaten the game!\nScore: ' + score + ' ' +' Deaths: ' + dCounter + ' \nPress R to go back to title and E to see credits.', menuConfig).setOrigin(0.5);
         
 
         // this.tweens.add({

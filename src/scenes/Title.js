@@ -105,8 +105,8 @@ class Title extends Phaser.Scene {
 
 
         if (keyR.isDown) {
-
-
+            dCounter = 0;
+            
             this.sound.play('select');
             
             //setting default time to 0 for timer

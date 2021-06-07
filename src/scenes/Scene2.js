@@ -294,6 +294,7 @@ class Scene2 extends Phaser.Scene{
             this.sound.play('collision');
             this.resetPlayer();
             dCounter += 1;
+            
             if (cam.deadzone){
                 deathText.setText('Deaths: ' + dCounter);
             }
