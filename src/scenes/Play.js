@@ -255,6 +255,8 @@ class Play extends Phaser.Scene{
 
         this.physics.add.collider(player, this.emeralds, this.collectGem, null, this);
         this.physics.add.overlap( player, hazardLayer);
+
+       music.play(musicConfig);
     }
 
     
@@ -306,7 +308,7 @@ class Play extends Phaser.Scene{
 
         }
         if(this.physics.collide(player, this.exit)){
-            this.sound.play('pickup');
+            this.sound.play('transition');
             this.exitScene();
         }
         if (cursors.up.isDown && player.body.blocked.down){

@@ -12,6 +12,8 @@ class Title extends Phaser.Scene {
         this.load.audio('Jump', './assets/Jump.wav');
         this.load.audio('collision', './assets/collision.wav');
         this.load.audio('pickup', './assets/pickup.wav');
+        this.load.audio('bgm', './assets/bgm2.wav');
+        this.load.audio('transition', './assets/transition.wav');
 
         this.load.tilemapTiledJSON('titleMap', './assets/Tilemaps/Title.json');
         this.load.image('Gem', './assets/Gem1.png');
@@ -28,9 +30,9 @@ class Title extends Phaser.Scene {
         this.add.image(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'title');
         
         //music configuration.
-        var musicConfig = {
+       musicConfig = {
             mute: false,
-            volume: .2,
+            volume: .7,
             rate: .5,
             detune: 0,
             loop: true,
@@ -91,6 +93,7 @@ class Title extends Phaser.Scene {
         highScore = 0;
 
         jump = this.sound.add('Jump');
+        music = this.sound.add('bgm');
         
     }
 

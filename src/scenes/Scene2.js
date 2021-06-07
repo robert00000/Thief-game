@@ -309,7 +309,7 @@ class Scene2 extends Phaser.Scene{
 
         }
         if(this.physics.collide(player, this.exit)){
-            this.sound.play('pickup');
+            this.sound.play('transition');
             initCount2 = score;
             //this.exit.body.destroy();
 
@@ -378,7 +378,7 @@ class Scene2 extends Phaser.Scene{
         
     }
     exitScene(player, exit){
-        this.sound.play('pickup');
+        this.sound.play('transition');
         
         exit.anims.play('Collect');
         exit.body.destroy();
