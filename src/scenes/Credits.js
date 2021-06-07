@@ -4,8 +4,12 @@ class Credits extends Phaser.Scene {
     }
 
     create() {
-        //this.background = this.add.tileSprite(0, 0, 640, 960, 'background').setOrigin(0, 0);
-        
+        // The background for the screen.
+        const map = this.add.tilemap('titleMap');
+        const tileset = map.addTilesetImage('tileset1', 'microtileset');
+
+
+        const bgLayer = map.createLayer('BG', tileset, 0, 0);
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Arial',

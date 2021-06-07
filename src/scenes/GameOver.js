@@ -4,7 +4,11 @@ class GameOver extends Phaser.Scene {
     }
 
     create() {
-        
+        const map = this.add.tilemap('titleMap');
+        const tileset = map.addTilesetImage('tileset1', 'microtileset');
+
+
+        const bgLayer = map.createLayer('BG', tileset, 0, 0);
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Arial',
