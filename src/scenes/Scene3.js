@@ -85,6 +85,8 @@ class Scene3 extends Phaser.Scene{
         
         const transitionLayer = map.createLayer('Transition', tileset, 0, 0);
 
+        const hiddenLayer = map.createLayer('Hidden wall1', tileset, 0, 0);
+
         // const hiddenLayer = map.createLayer('Hidden wall1', tileset, 0, 0);
         terrainLayer.setCollisionByProperty({
             collides: true
@@ -98,6 +100,7 @@ class Scene3 extends Phaser.Scene{
         
         this.hazard = hazardLayer;
         this.exit = transitionLayer;
+        this.hidden = hiddenLayer;
         //this.exit = this.physics.add(600, 600, 'Gem');
         
         const p1Spawn = map.findObject('p1Spawn', obj => obj.name === 'Spawns');
@@ -227,7 +230,7 @@ class Scene3 extends Phaser.Scene{
 
         //Adding collision 
         this.physics.add.collider(platforms, terrainLayer);
-        
+        this.physics.add.collider(player, hiddenLayer);
         this.physics.add.collider(this.emeralds, terrainLayer);
 
         
@@ -297,9 +300,13 @@ class Scene3 extends Phaser.Scene{
         }
         if(this.physics.collide(player, this.exit)){
             this.sound.play('pickup');
-            
             this.exitScene();
         }
+
+        if(this.physics.collide(player, this.hidden)){
+            this.hiddenLayer.alpha = 0;
+        }
+
         if (cursors.up.isDown && player.body.blocked.down){
             jump.play(jumpConfig);
             this.footsteps.mute = true;
