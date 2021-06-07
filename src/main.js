@@ -2,7 +2,8 @@
 // The Swindler     
 //Date completed: 6/7/21
 //The ICING
-//Double jumps have been implemented as well as tiled inside of our project.
+//Double jumps have been implemented as well as tiled inside of our project. It is an option to double jump
+//As if in the case if the game is too hard the double jump is a sort of debug mode solution.
 //Program uses tiled to get data for objects that have been placed and updates the score whenever the
 //player collides with these objects. Hazards are their own layer and it updates the death counter.
 //There are some "Secret" areas in the game that gives the player access to more loot which can help the player.
@@ -12,7 +13,7 @@
 //There is a variety of different endings that depend upon the player's score as well as their deaths.
 //this ending text varies depending upon how much the player had collected or died if at all allowing for dynamic endings.
 //At the start of different scenes there is advice, instructions or story elements.
-"use strict";
+
 
 let config = {
     type: Phaser.CANVAS,
@@ -40,8 +41,6 @@ let scoreText;
 // set UI sizes
 let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
-let platforms;
-let movingPlatform;
 // reserve keyboard variables
 let keyF, keyR, keyLEFT, keyRIGHT, xPosition,yPosition, keyUP, keyDOWN, keyE;
 let character = null;
@@ -64,6 +63,5 @@ let dCounter = 0;
 let deathText = 0;
 let advice = false, advice2 = false;
 // this is to detect the time elapsed
-let startTime = new Date();
-let endTime = new Date();
+
 let initCount = 0, initCount2 = 0, initCount3 = 0;

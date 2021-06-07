@@ -16,7 +16,7 @@ class Scene1 extends Phaser.Scene{
     }
     
     create() {   
-        //This is the starting scene in which it's the first scene.
+        //This is the starting scene in which it's the first scene to be loaded.
         //Thief sprite
         this.anims.create({
             key: 'leftstill',
@@ -160,22 +160,10 @@ class Scene1 extends Phaser.Scene{
             ease: 'Linear',
           });
         const gem = this.add.image(200, 65, 'Gem').setScale(.5,.5).setScrollFactor(0);
-        
-        //const cam2 = this.cameras.add(400, 0, 400, 300);
-        //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
-        
-        
-        
-        
+        //Key declaration.
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
-        // some variables
-        platforms = this.physics.add.staticGroup();
-       
 
-        // info text
-        //this.message = this.add.text(centerX, 32, 'Awaiting physics world events...').setOrigin(0.5);
-        //this.add.text(centerX, game.config.height - 64, 'Use cursor keys to move up and down.').setOrigin(0.5);
         // Objects for this scene
         this.emeralds = this.physics.add.group({
             allowGravity: false, 
@@ -224,8 +212,6 @@ class Scene1 extends Phaser.Scene{
         });
 
         //Adding collision 
-        this.physics.add.collider(platforms, terrainLayer);
-        
         this.physics.add.collider(this.emeralds, terrainLayer);
 
         
@@ -323,11 +309,6 @@ class Scene1 extends Phaser.Scene{
 
     }
     
-    getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-    }
     //This disables the item that collides with the player to make it look as though it has been collected.
     collectGem (player, gem)
     {   

@@ -3,14 +3,7 @@ class Scene2 extends Phaser.Scene{
         super("scene2");
     }
     preload(){
-        
-        this.load.image('microtileset', './assets/tileset1.png');
-        this.load.image('2xtileset', './assets/tileset2@2x.png');
         this.load.tilemapTiledJSON('tilemapJSON2', './assets/Tilemaps/Map2.json');
-        this.load.atlas('thief', 'assets/thief.png', 'assets/thief.json');
-        this.load.atlas('collect', 'assets/Collect.png', 'assets/Collect.json');
-        this.load.image('LStill', './assets/LStill.png');
-        this.load.image('RStill', './assets/RStill.png');
         this.load.audio('transition', './assets/transition.wav');
     }
     
@@ -151,39 +144,10 @@ class Scene2 extends Phaser.Scene{
         deathText = this.add.text(300, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         deathText.setText('Deaths ' + dCounter);
         const gem = this.add.image(200, 65, 'Gem').setScale(.5,.5).setScrollFactor(0);
-        //const cam2 = this.cameras.add(400, 0, 400, 300);
-        //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
-        
-        
-        // this.block2 = this.physics.add.sprite(600,600,'Gem').setOrigin(0.5);
-        // this.block2.body.onWorldBounds = true;
-        // this.block2.body.setImmovable = true;
-        // this.block2.body.onOverlap = true;
-        // this.block2.setCollideWorldBounds(true);
 
+        //Key declaration.
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         // some variables
-        platforms = this.physics.add.staticGroup();
-
-        
-        // movingPlatform = this.physics.add.image(300, 300, 'Barrier');
-        // movingPlatform.body.setSize(100,100);
-        
-        // movingPlatform.setImmovable(true);
-        // movingPlatform.body.allowGravity = false;
-        // movingPlatform.setVelocityX(50);
-
-        // this.platform = this.physics.add.sprite(100, 200, 'Chest');
-        // this.platform.setImmovable(true);
-        // this.platform.body.setSize(50,50);
-        // this.platform.body.allowGravity = false;
-
-        
-        
-        
-
-        // info text
-        
         // Objects for this scene
         this.emeralds = this.physics.add.group({
             allowGravity: false 
@@ -226,8 +190,6 @@ class Scene2 extends Phaser.Scene{
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         //Adding collision 
-        this.physics.add.collider(platforms, terrainLayer);
-        
         this.physics.add.collider(this.emeralds, terrainLayer);
         this.physics.add.collider(player, hiddenLayer);
         this.physics.add.collider(player, this.exit, this.exitScene, null, this);

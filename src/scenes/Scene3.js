@@ -143,36 +143,9 @@ class Scene3 extends Phaser.Scene{
         deathText = this.add.text(300, 60, '', { font: '16px Courier', fill: '#FEFEFE' }).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
         deathText.setText('Deaths ' + dCounter);
         const gem = this.add.image(200, 65, 'Gem').setScale(.5,.5).setScrollFactor(0);
-        //const cam2 = this.cameras.add(400, 0, 400, 300);
-        //this.background = this.add.tileSprite(0, 0, 640, 960,'background').setOrigin(0, 0);
-        
-        
-        // this.block2 = this.physics.add.sprite(600,600,'Gem').setOrigin(0.5);
-        // this.block2.body.onWorldBounds = true;
-        // this.block2.body.setImmovable = true;
-        // this.block2.body.onOverlap = true;
-        // this.block2.setCollideWorldBounds(true);
 
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         // some variables
-        platforms = this.physics.add.staticGroup();
-
-        
-        // movingPlatform = this.physics.add.image(300, 300, 'Barrier');
-        // movingPlatform.body.setSize(100,100);
-        
-        // movingPlatform.setImmovable(true);
-        // movingPlatform.body.allowGravity = false;
-        // movingPlatform.setVelocityX(50);
-
-        // this.platform = this.physics.add.sprite(100, 200, 'Chest');
-        // this.platform.setImmovable(true);
-        // this.platform.body.setSize(50,50);
-        // this.platform.body.allowGravity = false;
-
-        
-        
-        
 
         // info text
         
@@ -218,7 +191,7 @@ class Scene3 extends Phaser.Scene{
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         
         //Adding collision 
-        this.physics.add.collider(platforms, terrainLayer);
+        
         this.physics.add.collider(player, hiddenLayer);
         this.physics.add.collider(this.emeralds, terrainLayer);
 
@@ -338,17 +311,6 @@ class Scene3 extends Phaser.Scene{
             this.footsteps.mute = true;
         }
         
-        // if (movingPlatform.x >= 500)
-        // {
-        //     movingPlatform.setVelocityX(-50);
-        // }
-        // else if (movingPlatform.x <= 300)
-        // {
-        //     movingPlatform.setVelocityX(50);
-        // }
-        
-
-
 
     }
     
