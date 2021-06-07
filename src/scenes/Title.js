@@ -6,8 +6,6 @@ class Title extends Phaser.Scene {
         //images and sounds go here.
         
         this.load.image('microtileset', './assets/tileset1.png');
-        this.load.image('2xtileset', './assets/tileset2@2x.png');
-
         
         this.load.audio('select', './assets/Select.wav');
         this.load.audio('Footsteps', './assets/footsteps5.wav');
@@ -21,8 +19,6 @@ class Title extends Phaser.Scene {
 
     }
     create() {
-        
-        //this.background = this.add.tileSprite(0, 0, 640, 960, 'background').setOrigin(0, 0);
         
         const map = this.add.tilemap('titleMap');
         const tileset = map.addTilesetImage('tileset1', 'microtileset');
