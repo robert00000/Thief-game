@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="320" height="80" tilewidth="8" tileheight="8" infinite="0" nextlayerid="9" nextobjectid="38">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="320" height="80" tilewidth="8" tileheight="8" infinite="0" nextlayerid="9" nextobjectid="39">
  <editorsettings>
   <export target="Map2.json" format="json"/>
  </editorsettings>
@@ -948,10 +948,11 @@
   <object id="5" gid="31" x="525" y="263.5" width="8" height="8"/>
   <object id="6" gid="31" x="594" y="440" width="8" height="8"/>
   <object id="7" gid="31" x="653.833" y="328" width="8" height="8"/>
-  <object id="8" gid="31" x="983.333" y="438.5" width="8" height="8"/>
-  <object id="9" gid="31" x="950.333" y="407.833" width="8" height="8"/>
-  <object id="10" gid="31" x="984.333" y="380.5" width="8" height="8"/>
-  <object id="11" gid="31" x="1018.5" y="408.667" width="8" height="8"/>
+  <object id="8" gid="31" x="950" y="427.833" width="8" height="8"/>
+  <object id="9" gid="31" x="189" y="439.833" width="8" height="8"/>
+  <object id="10" gid="31" x="229.666" y="440.5" width="8" height="8"/>
+  <object id="11" gid="31" x="189.833" y="488.667" width="8" height="8"/>
+  <object id="38" gid="31" x="229.167" y="489" width="8" height="8"/>
   <object id="12" gid="31" x="489" y="601.667" width="8" height="8"/>
   <object id="13" gid="31" x="280.667" y="600.667" width="8" height="8"/>
   <object id="36" gid="31" x="280.667" y="600.667" width="8" height="8"/>
@@ -968,12 +969,11 @@
   <object id="19" gid="31" x="1680" y="192" width="8" height="8"/>
   <object id="20" gid="31" x="1680" y="220" width="8" height="8"/>
  </objectgroup>
- <objectgroup id="7" name="Secret">
+ <objectgroup id="7" name="Secret" offsetx="-9.33333" offsety="6.66667">
   <properties>
    <property name="collides" type="bool" value="true"/>
   </properties>
   <object id="23" name="Exit" gid="39" x="2442" y="610" width="8" height="8"/>
-  <object id="25" gid="39" x="218" y="463.667" width="8" height="8"/>
  </objectgroup>
  <objectgroup id="4" name="p1Spawn">
   <object id="14" name="Spawns" x="38.3333" y="144">
