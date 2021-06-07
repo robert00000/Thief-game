@@ -7,6 +7,8 @@
 //player collides with these objects. Hazards are their own layer and it updates the death counter.
 //There are some "Secret" areas in the game that gives the player access to more loot which can help the player.
 //towards gaining different ending text.
+//Animations are played for the player character and there is an effect whenever the player picks up
+//an object.
 //There is a variety of different endings that depend upon the player's score as well as their deaths.
 //this ending text varies depending upon how much the player had collected or died if at all allowing for dynamic endings.
 //At the start of different scenes there is advice, instructions or story elements.
