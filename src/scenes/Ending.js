@@ -42,7 +42,12 @@ class Ending extends Phaser.Scene {
         time = time.toFixed(2);
         
         this.text1 = this.add.text(game.config.width/2, -100 - borderUISize - borderPadding, 'You have beaten the game!\nScore: ' + score + ' ' +' Deaths: ' + dCounter + ' \nPress R to go back to title and E to see credits.', menuConfig).setOrigin(0.5);
-        
+        if(score < 30){
+            this.add.text(300, -100 - borderUISize - borderPadding, 'You did not fall to greed and focused upon the goal in which you have chosen to achieve.')
+        }
+        else{
+            this.add.text(300, -100 - borderUISize - borderPadding, 'You have collected a majority of the gems inside of the mueseum as well as achieved your goal.')
+        }
 
         // this.tweens.add({
         //     targets: this.text2,
