@@ -1,7 +1,10 @@
 //Collaborators Robert Williams, Carey Wang and Aaron Tishler
 // The Swindler     
 //Date completed: 6/7/21
-
+//Double jumps have been implemented as well as tiled inside of our project.
+//There are some "Secret" areas in the game that gives the player access to more loot.
+//There is a variety of different endings that depend upon the player's score as well as their deaths.
+//this ending text varies depending upon how much the player had collected or died if at all.
 "use strict";
 
 let config = {
