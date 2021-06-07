@@ -81,6 +81,7 @@ class GameOver extends Phaser.Scene {
         // wait for UP input to restart game
         if (keyR.isDown) {
             this.sound.play('select');
+            this.sound.stopByKey('bgm');
             // start next scene
             this.scene.start('titleScene');
         }
